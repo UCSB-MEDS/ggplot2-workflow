@@ -1,0 +1,15 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("chart-line", fill = "#5A5A5A", a11y = "sem")` Step 2. What visualization type?
+
+Next, decide what visualization type(s) is most appropriate given your data type(s)?*
+
+From [Data to Viz](https://www.data-to-viz.com/) (in my opinion) the *best* place to start for answering this question -- use the decision tree to explore chart options based on your data type(s). 
+
+![](media/data_to_viz.png){fig-align="center"}
+
+It provides a definition, what each chart type is used for, common variations of that chart type, common mistakes and caveats, related chart types (i.e. others that you might consider using for your given data type(s)), and links to the [R graph gallery](https://r-graph-gallery.com/index.html) and [Python gallery](https://www.python-graph-gallery.com/) so that you can learn how to create your chart with example code.
+
+**This is seriously such an invaluable resource, and I highly recommend turning to it often!!!**

@@ -1,0 +1,28 @@
+---
+title: "A workflow for building effective (and pretty) `{ggplot2}` data visualizations"
+author: Sam Csik
+date: March 16, 2022
+format: 
+  html:
+    theme: minty
+    toc: true
+    toc-location: left
+---
+
+![](media/ggplot2_hex.png){fig-align="center"}
+
+{{< include /sections/determine-data-types.qmd >}}
+
+::: panel-tabset
+
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+
+Here, I'm interested in visualizing temporal variation in bottom temperature at Mohawk Reef (Santa Barbara, CA). 
+
+## **Example 2:** tbd
+
+:::
+
+{{< include /sections/determine-graph-types.qmd >}}
+
+<!-- {{< include /sections/how-to-improve.qmd >}} -->

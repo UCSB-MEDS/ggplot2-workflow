@@ -1,0 +1,7 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("table", fill = "#5A5A5A", a11y = "sem")` Step 1. What data type(s)?
+
+In order to determine the most appropriate and effective graph type, you first need to determine what type(s) of data you're working with. 

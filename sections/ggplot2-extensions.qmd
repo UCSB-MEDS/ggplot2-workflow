@@ -1,0 +1,70 @@
+---
+title: "{ggplo2} extension packages"
+format: html
+---
+
+## `{ggplot2}` extension packages 
+
+There are lots of packages that are built to work seamlessly with `ggplot2` -- explore many of them in the [`ggplot2` extension gallery](https://exts.ggplot2.tidyverse.org/gallery/). 
+
+## Arranging Plots
+
+- [`{patchwork}`](): 
+- [`{cowplot}`](): 
+
+### Plot types:
+
+- [`{ggbeeswarm}`](https://github.com/eclarke/ggbeeswarm): column scatter / beeswarm-style plots in `{ggplot2}`
+- [`{ggbump}`](https://github.com/davidsjoberg/ggbump): a geom for `{ggplot2}` to create bump plots
+- [`{ggalluvial}`](https://github.com/corybrunson/ggalluvial): `{ggplot2}` extension for alluvial plots
+- [`{ggridges}`](https://github.com/wilkelab/ggridges/): ridgeline plots in `{ggplot2}`
+- [`{ggpointdensity}`](https://github.com/LKremer/ggpointdensity): a cross between a scatter plot and a 2D density plot
+- [`{ggExtra}`](https://github.com/daattali/ggExtra): add marginal histograms to `{ggplot2}`, and more `{ggplot2}` enhancements
+- [`{ggside}`](https://github.com/jtlandis/ggside): `{ggplot2}` extension allowing for plotting various geometries as side panels using the `{ggplot2}` API 
+- [`{ggpattern}`](https://github.com/coolbutuseless/ggpattern): `{ggplot2}` geoms with pattern fills
+- [`{ggpage}`](https://github.com/EmilHvitfeldt/ggpage): creates page layout visualizations in R
+- [`{ggradar}`](https://github.com/ricardo-bion/ggradar): radar charts with `{ggplot2}`
+- [`{ggTimeSeries}`](https://github.com/AtherEnergy/ggTimeSeries): time series visualization
+- [`{ggwordcloud}`](https://github.com/lepennec/ggwordcloud): a word cloud geom for `{ggplot2}`
+- [`{treemapify}`](https://github.com/wilkox/treemapify/): draw treemaps in `{ggplot2}`
+- [`{ggdensity}`](https://github.com/jamesotto852/ggdensity/): an R package for interpretable visualizations of bivariate density estimates
+- [`{gghalves}`](https://github.com/erocoar/gghalves): easy half-half geoms in `{ggplot2}`
+
+### Stats & Models:
+- [`{see}`](https://github.com/easystats/see): model visualization toolbox for `{easystats}` and `{ggplot2}`
+- [`{ggstatplot}`](https://github.com/IndrajeetPatil/ggstatsplot): enhancing `{ggplot2}` plots with statistical analysis
+- [`{ggpubr}`](https://github.com/kassambara/ggpubr/): `ggplot2` based publication ready plots
+- [`{ggdist}`](https://github.com/mjskay/ggdist/): visualizations of distributions and uncertainty
+- [`{ggsignif}`](https://github.com/const-ae/ggsignif): easily add significance brackets to your `{ggplots}`
+- [`{ggcorplot}`](https://github.com/kassambara/ggcorrplot/): visualization of a correlation matrix using `{ggplot2}`
+- [`{ggmosaic}`](https://github.com/haleyjeppson/ggmosaic): mosaicplots in the `{ggplot2}` framework
+- [`{ggpmisc}`](https://github.com/aphalo/ggpmisc/): a `{ggplot2}` extension with emphasis on annotations and plotting related to fitted models
+
+### Interactive Visualizations:
+- [`{ggiraph}`](https://github.com/davidgohel/ggiraph): makes `ggplot2` graphis interactive
+- [`{}`](): 
+
+### Themes: 
+
+Googling **"ggplot themeing packages"** will get you lots of great information. The following packages were pulled from the first couple Google results ([Themes to spice up visualizations with ggplot2](https://towardsdatascience.com/themes-to-spice-up-visualizations-with-ggplot2-3e275038dafa), by Abhinav Malasi (The Medium) & [Themes to Improve your ggplot Figures](https://rfortherestofus.com/2019/08/themes-to-improve-your-ggplot-figures/), by David Keyes (R for the Rest of Us)):
+
+- [`{ggthemes}`](https://github.com/jrnold/ggthemes/): additional themes, scales, and geoms for `{ggplot2}`
+- [`{hrbrthemes}`](https://github.com/hrbrmstr/hrbrthemes): oppinionated, typographic-centric `{ggplot2}` themes and theme components 
+- [`{bbplot}`](https://github.com/bbc/bbplot/): R package that helps create and export `{ggplot2}` charts in the style used by the BBC News data team
+- [`{ggpomological}`](https://github.com/gadenbuie/ggpomological/): pomological plot theme for `{ggplot2}`
+- [`{ggthemer}`](https://github.com/Mikata-Project/ggthemr): themes for `{ggplot2}` 
+- [`{ggtech}`](https://github.com/ricardo-bion/ggtech): `{ggplot2}` tech themes, scales, and geoms
+- [`{tvthemes}`](https://github.com/Ryo-N7/tvthemes): 
+
+### Fine tuning: 
+
+- [`{ggtext}`](https://github.com/wilkelab/ggtext/): improved text rendering support for `{ggplot2}`
+- [`{ggrepel}`](https://github.com/slowkow/ggrepel): repel overlapping text labels away from each other.
+- [`{geomtextpath}`](https://github.com/AllanCameron/geomtextpath/): create curved text paths in `{ggplot2}`
+- [`{directlabels}`](https://github.com/tdhock/directlabels): direct labels for multicolor plots in lattice or ggplot2
+- [`{ggh4x}`](https://github.com/teunbrand/ggh4x/): options for tailored facets, multiple colourscales and miscellaneous
+- [`{ggfittext}`](https://github.com/wilkox/ggfittext/): `{ggplot2}` geoms to fit text into boxes 
+- [`{lemon}`](https://github.com/stefanedwards/lemon): freshing up your ggplots (primarily for modifying axis lines and legends)
+- [`{ggbreak}`](https://github.com/YuLab-SMU/ggbreak): an implementation of scale functions for setting axis breaks of a ggplot
+- [`{ggpp}`](https://github.com/aphalo/ggpp/): extensions to `{ggplot2}` (but particularly useful for adding inset tables and plots)
+
