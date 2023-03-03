@@ -38,4 +38,8 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
+# DS_Stores
 .DS_Store
+
+# raw data
+raw-data/
