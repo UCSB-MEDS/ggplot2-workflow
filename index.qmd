@@ -21,6 +21,8 @@ Here, I'm interested in visualizing temporal variation in bottom temperature at 
 
 ## **Example 2:** tbd
 
+## **Example 3:** tbd
+
 :::
 
 {{< include /sections/determine-graph-types.qmd >}}
