@@ -1,0 +1,39 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("chart-simple", fill = "#5A5A5A", a11y = "sem")` Step 3. Create a basic plot
+
+::: panel-tabset
+
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+
+Let's start by creating a super basic **ridgeline plot of aggregate bottom temperatures by month** using the [`{ggridges}` package](https://github.com/wilkelab/ggridges/):
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#..........................load packages.........................
+library(tidyverse)
+library(ggridges)
+
+#..........................read in data..........................
+mko_clean <- readRDS(here::here("clean-data", "mohawk_temps.rds"))
+
+#..............................plot..............................
+mko_ridges_plot <- mko_clean |> 
+  group_by(month_name) |> 
+  
+  # create ridgeline plot ----
+  ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
+  ggridges::geom_density_ridges_gradient() 
+
+mko_ridges_plot
+```
+
+## **Example 2:**
+
+## **Example 3:**
+
+:::

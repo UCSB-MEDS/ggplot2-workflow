@@ -30,14 +30,11 @@ mko_clean <- mko |>
          Temp_mid = as.numeric(Temp_mid), 
          Temp_bot = as.numeric(Temp_bot)) |> 
   
+  # add month abbreviation
+  mutate(month_name = as.factor(month.name[month])) |> 
+  
   # replace 9999s with NAs
   replace_with_na(replace = list(Temp_bot = 9999, Temp_top = 9999, Temp_mid = 9999)) |> 
-  
-  # filter years
-  # filter(year %in% c(2016:2020)) |> 
-  
-  # add month abbreviation
-  mutate(month_name = month.name[month]) |> 
   
   # select/reorder desired columns
   select(date_time, year, month, day, month_name, Temp_bot, Temp_mid, Temp_top) 
@@ -58,34 +55,33 @@ see_NAs <- mko_clean %>%
 bottom <- mko_clean |> select(Temp_bot)
 naniar::vis_miss(bottom)
 
-#.........................summarize data.........................
-set.seed(12345) 
-random_mko_sample <- dplyr::sample_n(mko_clean, 10)
-
 #.......................calculate avg temp.......................
 mko_avg <- mko_clean |> 
-  summarize(mean_temp = mean(Temp_bot, na.rm = TRUE)) |> 
-  pull()
+  summarize(mean_temp = round(mean(Temp_bot, na.rm = TRUE), 1)) |> 
+  pull() 
 
 #..............................plot..............................
 
-# mko_ridges_plot <- 
-
-mko_clean |> 
+mko_ridges_plot <- mko_clean |> 
   group_by(month_name) |> 
   
   # create density ridges plot
   ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
   ggridges::geom_density_ridges_gradient(rel_min_height = 0.01, scale = 3) + # rel_min_height cuts trailing tails (0.01 suggested); scale sets extent of overlap
   
-  # set x axis breaks
+  # add vertical line at avg temp + annotation
+  geom_vline(xintercept = mko_avg, linetype = "dashed", color = "black") +
+  annotate(geom = "segment", x = 18, y = "April", xend = mko_avg, yend = "May",
+           arrow = arrow(length = unit(3, "mm"))) +
+  annotate(geom = "text", x = 18, y = "April", label = paste0(" Avg Temp = ", mko_avg, "°C"), hjust = "left") +
+
+  # set x-axis breaks
   scale_x_continuous(breaks = c(9, 12, 15, 18, 21)) +
   
   # arrange months in reverse chronological order
   scale_y_discrete(limits = rev(month.name)) + 
   
   # fill color (palette or custom options)
-  # scale_fill_viridis_c(name = "Temp. (°C)", option = "C") +
   scale_fill_gradientn(colors = c("#2C5374","#778798", "#ADD8E6", "#EF8080", "#8B3A3A"), name = "Temp. (°C)") +
   
   # update labs
@@ -101,6 +97,7 @@ mko_clean |>
     axis.title.y = element_blank()
   )
 
+mko_ridges_plot
   
   
   

@@ -23,14 +23,14 @@ format:
 
 Below, you'll find three different examples, beginning with an assessment of the raw data and ending with a completed visualization.
 
-{{< include /sections/determine-data-types.qmd >}}
+{{< include /sections/1-determine-data-types.qmd >}}
 
-{{< include /sections/determine-graph-types.qmd >}}
+{{< include /sections/2-determine-graph-types.qmd >}}
 
-{{< include /sections/create-basic-plot.qmd >}}
+{{< include /sections/3-create-basic-plot.qmd >}}
 
-{{< include /sections/improve-readability.qmd >}}
+{{< include /sections/4-improve-readability.qmd >}}
 
-{{< include /sections/customize.qmd >}}
+{{< include /sections/5-final-touches.qmd >}}
 
 <!-- {{< include /sections/how-to-improve.qmd >}} -->

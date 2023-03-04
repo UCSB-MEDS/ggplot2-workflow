@@ -4,7 +4,7 @@ format: html
 
 ## `r fontawesome::fa("table", fill = "#5A5A5A", a11y = "sem")` Step 1. What data type(s)?
 
-In order to determine the most appropriate and effective graph type, you first need to determine what type(s) of data you're working with. 
+In order to determine the most appropriate and effective chart type, you first need to determine what type(s) of data you're working with. 
 
 ::: panel-tabset
 
@@ -17,7 +17,7 @@ Let's say we're interested in visualizing **temporal variation in bottom tempera
 **Do not attempt to push raw data to GitHub** -- adding your `raw-data/` folder (or equivalent) to your `.gitignore` is highly recommmended. You may download the cleaned `mohawk_cleaned.rds` file [here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/clean-data/mohawk_temps.rds).
 :::
 
-The raw data file contains 87 variables and >473,000 observations across 18 years (2005 - 2022) (data have been interpolated to a 20 min interval) -- cleaning involves selecting only columns of interest / coercing variables to the appropriate data type, adding month abbreviations, and assessing missing data (find the [cleaning script here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/data-wrangling/ocean-temps.R)).
+The raw data file contains 87 variables and >473,000 observations across 18 years (2005 - 2022) (data have been interpolated to a 20 min interval) -- cleaning involves selecting only columns of interest,  coercing variables to the appropriate data type, adding month abbreviations, and assessing missing data (find the [cleaning script here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/data-wrangling/ocean-temps.R)).
 
 Below are 10 randomly sampled rows from our cleaned data:
 
@@ -25,13 +25,13 @@ Below are 10 randomly sampled rows from our cleaned data:
 #| eval: true
 #| echo: true
 #| message: false
-# load packages
+#..........................load packages.........................
 library(tidyverse)
 
-# read in cleaned data
+#......................read in cleaned data......................
 mko_clean <- readRDS(here::here("clean-data", "mohawk_temps.rds"))
 
-# randomly sample 10 rows
+#....................randomly sample 10 rows.....................
 set.seed(12345) 
 (random_mko_sample <- dplyr::sample_n(mko_clean, 10))
 ```

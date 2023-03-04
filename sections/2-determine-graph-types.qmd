@@ -15,7 +15,7 @@ format: html
 
 *Next, decide what visualization type(s) is most appropriate given your data type(s).*
 
-From [Data to Viz](https://www.data-to-viz.com/) (in my opinion) the *best* place to start for answering this question -- use the decision tree to explore chart options based on your data type(s). 
+From [Data to Viz](https://www.data-to-viz.com/) (in my opinion) the *best* place to start when answering this question -- use the decision tree to explore chart options based on your data type(s). 
 :::
 ::::
 
@@ -23,7 +23,7 @@ From [Data to Viz](https://www.data-to-viz.com/) (in my opinion) the *best* plac
 ## Click on a particular chart type in the [From Data to Viz](https://www.data-to-viz.com/) decision tree to find:
 
 - a definition and examples(s)
-- a description of what this chart type is used for
+- a description of what that chart type is used for
 - common variations on that chart type
 - common mistakes (and how to avoid them)
 - related chart types (i.e. others that you might also consider using for your given data type(s))
@@ -36,7 +36,7 @@ From [Data to Viz](https://www.data-to-viz.com/) (in my opinion) the *best* plac
 
 ## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
 
-We're presented with a few great options (boxplot, violin plot, ridgeline plot, density plot, histogram) given our data. I'm partial to the **ridgeline plot**, so that's what I'll choose for this example:
+We're presented with a few great options (boxplot, violin plot, ridgeline plot, density plot, histogram) given our data. I'm partial to the **ridgeline plot** -- I find it an intuitive way to view changes in temperature distributions through time, so that's what I'll choose for this example:
 
 ![](media/ggridges.gif){fig-align="center"}
 

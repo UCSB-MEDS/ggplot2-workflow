@@ -1,0 +1,65 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("lightbulb", fill = "#5A5A5A", a11y = "sem")` Step 4. Improve clarity & take-home message(s)
+
+::: panel-tabset
+
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+
+We've successfully plotted our temperature data, but we'll want to update the following so that our visualization is easier to interpret: 
+
+- order months chronologically
+- apply an intuitive color gradient scale
+
+We might also choose to highlight a particular benchmark temperature(s) (e.g. the average bottom temperature across our data set) -- adding a vertical line and annotations is a great option for this. 
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#..........................load packages.........................
+library(tidyverse)
+library(ggridges)
+
+#..........................read in data..........................
+mko_clean <- readRDS(here::here("clean-data", "mohawk_temps.rds"))
+
+#.......................calculate avg temp.......................
+mko_avg <- mko_clean |> 
+  summarize(mean_temp = round(mean(Temp_bot, na.rm = TRUE), 1)) |> 
+  pull() 
+
+#..............................plot..............................
+mko_ridges_plot <- mko_clean |> 
+  group_by(month_name) |> 
+  
+  # create ridgeline plot ----
+  ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
+  ggridges::geom_density_ridges_gradient(rel_min_height = 0.01, scale = 3) + # rel_min_height cuts trailing tails (0.01 suggested); scale sets extent of overlap
+  
+  # add vertical line at avg temp + annotation
+  geom_vline(xintercept = mko_avg, linetype = "dashed", color = "black") +
+  annotate(geom = "segment", x = 18, y = "April", xend = mko_avg, yend = "May",
+           arrow = arrow(length = unit(3, "mm"))) + # this is mostly just a bunch of manual fiddling until the arrow is placed where I want it
+  annotate(geom = "text", x = 18, y = "April", label = paste0(" Avg Temp = ", mko_avg, "°C"), hjust = "left") + # same here
+
+  # set x-axis breaks ----
+  scale_x_continuous(breaks = c(9, 12, 15, 18, 21)) +
+  
+  # arrange months in reverse chronological order ----
+  scale_y_discrete(limits = rev(month.name)) + 
+  
+  # fill color ----
+  scale_fill_gradientn(colors = c("#2C5374","#778798", "#ADD8E6", "#EF8080", "#8B3A3A"), name = "Temp. (°C)") 
+
+mko_ridges_plot
+```
+
+
+## **Example 2:**
+
+## **Example 3:**
+
+:::
