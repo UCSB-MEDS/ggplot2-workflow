@@ -17,7 +17,7 @@ Let's say we're interested in visualizing **temporal variation in bottom tempera
 **Do not attempt to push raw data to GitHub** -- adding your `raw-data/` folder (or equivalent) to your `.gitignore` is highly recommmended. You may download the cleaned `mohawk_cleaned.rds` file [here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/clean-data/mohawk_temps.rds).
 :::
 
-The raw data file contains 87 variables and >473,000 observations across 18 years (2005 - 2022) (data have been interpolated to a 20 min interval) -- cleaning involves selecting only columns of interest,  coercing variables to the appropriate data type, adding month abbreviations, and assessing missing data (find the [cleaning script here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/data-wrangling/ocean-temps.R)).
+The raw data file contains 87 variables and >473,000 observations across 18 years (2005 - 2022) (data have been interpolated to a 20 min interval) -- cleaning involves selecting only variables of interest,  coercing variables to the appropriate data type, adding month abbreviations, and assessing missing data (find the [cleaning script here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/data-wrangling/ocean-temps.R)).
 
 Below are 10 randomly sampled rows from our cleaned data:
 

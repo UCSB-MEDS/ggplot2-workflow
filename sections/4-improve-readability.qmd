@@ -13,7 +13,10 @@ We've successfully plotted our temperature data, but we'll want to update the fo
 - order months chronologically
 - apply an intuitive color gradient scale
 
-We might also choose to highlight a particular benchmark temperature(s) (e.g. the average bottom temperature across our data set) -- adding a vertical line and annotations is a great option for this. 
+We might also choose to:
+
+- highlight a particular benchmark temperature(s) (e.g. the average bottom temperature across our data set) -- adding a vertical line and annotations is a great option for this 
+- explore `geom_density_ridges_gradient()` argument options to modify the appearance of our ridges
 
 ```{r}
 #| eval: true
