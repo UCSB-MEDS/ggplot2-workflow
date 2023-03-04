@@ -13,18 +13,12 @@ format:
 
 {{< include /sections/determine-data-types.qmd >}}
 
-::: panel-tabset
-
-## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
-
-Here, I'm interested in visualizing temporal variation in bottom temperature at Mohawk Reef (Santa Barbara, CA). 
-
-## **Example 2:** tbd
-
-## **Example 3:** tbd
-
-:::
-
 {{< include /sections/determine-graph-types.qmd >}}
+
+{{< include /sections/create-basic-plot.qmd >}}
+
+{{< include /sections/improve-readability.qmd >}}
+
+{{< include /sections/customize.qmd >}}
 
 <!-- {{< include /sections/how-to-improve.qmd >}} -->

@@ -4,13 +4,23 @@ format: html
 
 ## `r fontawesome::fa("chart-line", fill = "#5A5A5A", a11y = "sem")` Step 2. What visualization type?
 
-Next, decide what visualization type(s) is most appropriate given your data type(s)?*
+:::: {.columns}
+::: {.column width="40%"}
+![](media/data_to_viz.png){fig-align="center"}
+:::
+
+::: {.column width="60%"}
+<br>
+<br>
+
+*Next, decide what visualization type(s) is most appropriate given your data type(s).*
 
 From [Data to Viz](https://www.data-to-viz.com/) (in my opinion) the *best* place to start for answering this question -- use the decision tree to explore chart options based on your data type(s). 
+:::
+::::
 
-![](media/data_to_viz.png){fig-align="center"}
-
-Click on a particular chart type to find:
+::: callout-tip
+## Click on a particular chart type in the [From Data to Viz](https://www.data-to-viz.com/) decision tree to find:
 
 - a definition and examples(s)
 - a description of what this chart type is used for
@@ -19,5 +29,19 @@ Click on a particular chart type to find:
 - related chart types (i.e. others that you might also consider using for your given data type(s))
 - links to the [R graph gallery](https://r-graph-gallery.com/index.html) and [Python gallery](https://www.python-graph-gallery.com/) with *many* different examples of that chart type + code so that you can learn how to create your own
 
-
 **This is seriously such an invaluable resource, and I highly recommend turning to it often!!!**
+:::
+
+::: panel-tabset
+
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+
+We're presented with a few great options (boxplot, violin plot, ridgeline plot, density plot, histogram) given our data. I'm partial to the **ridgeline plot**, so that's what I'll choose for this example:
+
+![](media/ggridges.gif){fig-align="center"}
+
+## **Example 2:**
+
+## **Example 3:**
+
+:::

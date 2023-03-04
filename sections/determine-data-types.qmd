@@ -5,3 +5,41 @@ format: html
 ## `r fontawesome::fa("table", fill = "#5A5A5A", a11y = "sem")` Step 1. What data type(s)?
 
 In order to determine the most appropriate and effective graph type, you first need to determine what type(s) of data you're working with. 
+
+::: panel-tabset
+
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+
+Let's say we're interested in visualizing **temporal variation in bottom temperature** at Mohawk Reef (Santa Barbara, CA), a near-shore rocky reef and one of the [Santa Barbara Coastal (SBC) LTER](https://sbclter.msi.ucsb.edu/) research sites. To do so, we'll use SBC LTER data, [SBC LTER: Ocean: Currents and Biogeochemistry: Moored CTD and ADCP data from Mohawk Outside Spar (MKO), ongoing since 2005](https://pasta.lternet.edu/package/eml/knb-lter-sbc/2007/16), available for download on the [EDI Data Portal](https://portal.edirepository.org/nis/home.jsp).
+
+::: callout-important
+## Warning: Large data file!
+**Do not attempt to push raw data to GitHub** -- adding your `raw-data/` folder (or equivalent) to your `.gitignore` is highly recommmended. You may download the cleaned `mohawk_cleaned.rds` file [here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/clean-data/mohawk_temps.rds).
+:::
+
+The raw data file contains 87 variables and >473,000 observations across 18 years (2005 - 2022) (data have been interpolated to a 20 min interval) -- cleaning involves selecting only columns of interest / coercing variables to the appropriate data type, adding month abbreviations, and assessing missing data (find the [cleaning script here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/data-wrangling/ocean-temps.R)).
+
+Below are 10 randomly sampled rows from our cleaned data:
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+# load packages
+library(tidyverse)
+
+# read in cleaned data
+mko_clean <- readRDS(here::here("clean-data", "mohawk_temps.rds"))
+
+# randomly sample 10 rows
+set.seed(12345) 
+(random_mko_sample <- dplyr::sample_n(mko_clean, 10))
+```
+
+We are working with both **numeric data** (bottom temperature, `Temp_bot`) and **categorical data** (months, `month`). Further we have several (well, *many*) observations per group (month).
+
+## **Example 2:** tbd
+
+## **Example 3:** tbd
+
+:::
