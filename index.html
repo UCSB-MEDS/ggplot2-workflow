@@ -9,7 +9,7 @@
 <meta name="author" content="Sam Csik">
 <meta name="dcterms.date" content="2022-03-16">
 
-<title>A workflow for building effective (and pretty) {ggplot2} data visualizations</title>
+<title>One workflow for building effective (and pretty) {ggplot2} data visualizations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,7 +124,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A workflow for building effective (and pretty) <code>{ggplot2}</code> data visualizations</h1>
+<h1 class="title">One workflow for building effective (and pretty) <code>{ggplot2}</code> data visualizations</h1>
 </div>
 
 
@@ -151,11 +151,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="media/ggplot2_hex.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
+</div><div class="column" style="width:60%;">
+<p><code>{ggplot2}</code> has, in many ways, become the de facto tool for data visualization in R. And with the <em>many</em> extension packages available, there’s hardly a limit to what you can create. Building effective and visually-pleasing data visualizations is a skill that gets easier with practice, and following a somewhat structured workflow – at least at the start – can help you get there faster. This workshop covers one approach for doing so, though you’ll find what works best for you with time.</p>
+</div>
+</div>
+<p>Below, you’ll find three different examples, beginning with an assessment of the raw data and ending with a completed visualization.</p>
 <section id="step-1.-what-data-types" class="level2">
 <h2 class="anchored" data-anchor-id="step-1.-what-data-types"><svg aria-label="table" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>table</title><path d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z"></path></svg> Step 1. What data type(s)?</h2>
 <p>In order to determine the most appropriate and effective graph type, you first need to determine what type(s) of data you’re working with.</p>
