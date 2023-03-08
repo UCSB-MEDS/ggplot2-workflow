@@ -3,5 +3,10 @@
 #..........................load packages.........................
 library(tidyverse)
 
+#..........................import data...........................
+wq <- read_csv(here::here("raw-data", "safetoswim_2010-2020_2023-03-03.csv"))
+
 #..........................wrangle data..........................
-wq_clean <- read_csv(here::here("raw-data", "safetoswim_2010-2020_2023-03-03.csv"))
+wq_clean <- wq |> 
+  
+  select(Analyte, CollectionDepth, CollectionTime, DW_AnalyteName, EventCode, LocationCode)
