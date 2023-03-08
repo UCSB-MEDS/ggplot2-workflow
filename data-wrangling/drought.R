@@ -130,7 +130,7 @@ ca_plot <- ggplot(drought_ca) +
   ) +
   
   # customize legend
-  guides(fill = guide_legend(nrow = 1, byrow = FALSE, reverse = FALSE,
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE, reverse = FALSE,
                              #title = "Conditions", title.position = "bottom", title.hjust = 0.5,
                              label.position = "bottom", keywidth = 3)) 
 
