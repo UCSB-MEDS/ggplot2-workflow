@@ -4,23 +4,32 @@
 #..........................load packages.........................
 library(tidyverse)
 library(lubridate)
-library(geofacet)
 library(cowplot)
 library(showtext)
+# library(geofacet)
 
 #..........................import data...........................
 drought <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-06-14/drought.csv')
 state <- data.frame(state_name = state.name, state_abb = state.abb)
 
 #......................import google fonts.......................
+
+# {showtext}: https://github.com/yixuan/showtext
+
+# load Google Fonts: https://fonts.google.com/ ----
 font_add_google(name = "Alfa Slab One", family = "alfa")
 font_add_google(name = "Sen", family = "sen")
+
+# automatically use {showtext} to render text for future devices ----
 showtext::showtext_auto()
 
-#..........................wrangle data..........................
-drought_clean <- drought %>%
+# tell showtext the resolution for the device ----
+showtext_opts(dpi = 300)
 
-  # format dates
+#..........................wrangle data..........................
+drought_clean <- drought |> 
+
+  # format date
   mutate(DATE = str_remove(DATE, "d_"),
          date = ymd(DATE),
          year = year(date)) |>
@@ -42,24 +51,19 @@ drought_clean <- drought %>%
   # wide to long
   pivot_longer(cols = c(D0:D4, W0:W4), names_to = "condition", values_to = "value") |>
 
-  # make wet condition values negative by multiplying by -1
-  mutate(value = ifelse(grepl("D", condition) == T, value, value * -1)) |>
-  # mutate(wet = str_detect(condition, "W", negate = FALSE), value, value * -1) |>
-  # mutate(value_adjusted = case_when(wet == TRUE ~ value * -1)) |> # doesn't work
-
   # add condition levels
   mutate(condition_long = factor(condition,
                             levels = c("D4", "D3", "D2", "D1","D0",
                                        "W0", "W1", "W2", "W3", "W4"),
                             labels = c("Exceptional Drought", "Extreme Drought",
                                        "Severe Drought", "Moderate Drought", "Abnormally Dry",
-                                       "Abnormally Wet", "Moderate Wet",
-                                       "Severe Wet", "Extreme Wet", "Exceptional Wet"))) |>
+                                       "Exceptional Wet", "Extreme Wet", 
+                                       "Severe Wet", "Moderate Wet", "Abnormally Wet"))) |>
 
   # select / reorder necessary columns
   select(date, year, state_name = state, condition, condition_long, value) |>
-
-  # filter for years 2012 onward
+  
+  # filter for years of interest 
   filter(year >= 2012)
 
 # add state abbreviations
@@ -69,79 +73,95 @@ drought_clean <- full_join(drought_clean, state)
 
 #..........................plot just CA..........................
 
-# read in clean data
-# drought_clean <- readRDS(here::here("clean-data", "us_drought.rds"))
+# read in clean data ----
+drought_clean <- readRDS(here::here("clean-data", "us_drought.rds"))
 
-# filter for just CA
-drought_ca <- drought_clean |> filter(state_abb == "CA")
-
-# color palette
+# color palette ----
 colors <- c("#4D1212", "#9A2828", "#DE5A2C", "#DE922C", "#DEC02C", 
-            "#ABCAFA", "#77A3EA", "#5287DE", "#243CB9", "#152473")
+            "#152473", "#243CB9", "#5287DE", "#77A3EA", "#ABCAFA")
             
-# title
+# title & subtitle text ----
 ca_title = "Drought vs. Wet Conditions Across California"
-
-# subtitle
 ca_subtitle = "Percent area experiencing drought versus wet conditions from 2012 to 2022"
 
-# plot     
-ca_plot <- ggplot(drought_ca) + 
+# plot ----     
+ca_plot <- drought_clean |>
   
-  # create area chart & add horizontal lines
+  # filter for CA ----
+ filter(state_abb == "CA") |> 
+  
+  # make wet condition values negative by multiplying by -1 ----
+  mutate(value = ifelse(test = grepl("D", condition) == T, yes = value, no = value * -1)) |>
+  
+  # initialize ggplot ----
+  ggplot() + 
+  
+  # create area chart & add horizontal lines ----
   geom_area(aes(x = date, y = value, fill = condition_long)) +
-  geom_hline(yintercept = 100, color = "#9B2F2F", linetype = 2) +
-  geom_hline(yintercept = 50, color = "#FF9861", linetype = 2) +
-  geom_hline(yintercept = -50, color = "#B7D2FF", linetype = 2) +
-  geom_hline(yintercept = -100, color = "#2F3F9B", linetype = 2) +
+  geom_hline(yintercept = 100, color = "#303030", alpha = 0.55, linetype = 2) +
+  geom_hline(yintercept = 50, color = "#5B5B5B", alpha = 0.55, linetype = 2) +
+  geom_hline(yintercept = -50, color = "#5B5B5B", alpha = 0.55, linetype = 2) +
+  geom_hline(yintercept = -100, color = "#303030", alpha = 0.55, linetype = 2) +
   
-  # set x-axis breaks
-  scale_x_date(date_labels = "'%y", date_breaks = "2 years") +
+  # set x-axis breaks ----
+  scale_x_date(date_labels = "%Y", date_breaks = "2 years") +
   
-  # set colors
+  # set colors ----
   scale_fill_manual(values = colors) +
   
-  # labs & titles
+  # labs & titles ----
   labs(y = "% area",
        title = ca_title,
        subtitle = ca_subtitle) +
   
-  # set theme
+  # set theme ----
   theme_classic() +
   
-  # customize theme 
+  # customize theme ----
   theme(
-    plot.title = element_text(family = "alfa", color = "#303030", size = 16, face = "bold"),
-    plot.subtitle = element_text(family = "sen", color = "#303030", size = 13),
+    
+    # background colors 
+    plot.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"), 
+    panel.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"),
+    
+    # titles 
+    plot.title = element_text(family = "alfa", color = "#303030", size = 17, margin = margin(t = 5, r = 10, b = 5, l = 0)),
+    plot.subtitle = element_text(family = "sen", color = "#303030", size = 14, margin = margin(t = 0, r = 10, b = 20, l = 0)),
+    
+    # legend 
     legend.direction = "horizontal",
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(family = "sen", color = "#303030"),
+    legend.text = element_text(family = "sen", color = "#303030", size = 9),
     legend.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"),
-    plot.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"), # 292828
-    panel.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"),
-    axis.text.y = element_blank(),
+    legend.key.width = unit(4, 'cm'),
+    
+    # axes 
     axis.title = element_blank(),
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(size = 10),
     axis.line = element_blank(),
     axis.ticks = element_blank()
   ) +
   
-  # customize legend
+  # customize legend ----
   guides(fill = guide_legend(nrow = 2, byrow = TRUE, reverse = FALSE,
-                             #title = "Conditions", title.position = "bottom", title.hjust = 0.5,
-                             label.position = "bottom", keywidth = 3)) 
+                             label.position = "bottom")) 
 
 ca_plot
 
 #........................add annotations.........................
 
-# annotated_ca_plot <- cowplot::ggdraw(ca_plot) +
-#   cowplot::draw_text(x = 1, y = 0.84, color = "#9B2F2F", text = "50% Drought", family = "sen", size = 11, fontface = "bold")
-# 
-# annotated_ca_plot
+annotated_ca_plot <- cowplot::ggdraw(ca_plot) +
+  cowplot::draw_text(x = 0.94, y = 0.85, color = "#303030", text = "100% Drought", family = "sen", size = 11, fontface = "bold") + # x = 0.94, y = 0.85 (RStudio Viewer) | x = 0.95, y = 0.88 (ggsave)
+  cowplot::draw_text(x = 0.94, y = 0.72, color = "#5B5B5B", text = "50% Drought", family = "sen", size = 11, fontface = "bold") + # x = 0.95, y = 0.73 (RStudio Viewer) | x = 0.955, y = 0.725 (ggsave)
+  cowplot::draw_text(x = 0.955, y = 0.455, color = "#5B5B5B", text = "50% Wet", family = "sen", size = 11, fontface = "bold") + # x = 0.96, y = 0.50 (RStudio Viewer) | x = 0.965, y = 0.415 (ggsave)
+  cowplot::draw_text(x = 0.955, y = 0.32, color = "#303030", text = "100% Wet", family = "sen", size = 11, fontface = "bold") # x = 0.96, y = 0.38 (RStudio Viewer) | x = 0.965, y = 0.26 (ggsave)
+
+annotated_ca_plot
 
 #............................save plot...........................
-# ggsave(filename = "ca_droughts.png", plot = annotated_ca_plot, path = "saved-plots", height = 30, width = 60, units = "px", limitsize = FALSE)
+ggsave(filename = "ca_droughts.png", plot = annotated_ca_plot, path = "saved-plots")
 
 #........................plot all states.........................
 # 
