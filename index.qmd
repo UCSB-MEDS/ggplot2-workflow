@@ -25,12 +25,13 @@ Below, you'll find three different examples, beginning with an assessment of the
 
 ::: panel-tabset
 
-## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Ex 1:** Ocean Temperatures
 
 ```{r}
 #| eval: true
 #| echo: false
 #| message: false
+#| fig-align: center
 #..........................load packages.........................
 library(tidyverse)
 library(ggridges)
@@ -45,97 +46,102 @@ mko_avg <- mko_clean |>
 
 #..............................plot..............................
 mko_ridges_plot <- mko_clean |>
-  group_by(month_name) |>
-
+  
+  # group by month ----
+group_by(month_name) |>
+  
   # create ridgeline plot ----
-  ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
+ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
   ggridges::geom_density_ridges_gradient(rel_min_height = 0.01, scale = 3) + # rel_min_height cuts trailing tails (0.01 suggested); scale sets extent of overlap
-
+  
   # add vertical line at avg temp + annotation
   geom_vline(xintercept = mko_avg, linetype = "dashed", color = "black") +
   annotate(geom = "segment", x = 18, y = "April", xend = mko_avg, yend = "May",
            arrow = arrow(length = unit(3, "mm"))) + # this is mostly just a bunch of manual fiddling until the arrow is placed where I want it
   annotate(geom = "text", x = 18, y = "April", label = paste0(" Avg Temp = ", mko_avg, "°C"), hjust = "left") + # same here
-
+  
   # set x-axis breaks ----
-  scale_x_continuous(breaks = c(9, 12, 15, 18, 21)) +
-
+scale_x_continuous(breaks = c(9, 12, 15, 18, 21)) +
+  
   # arrange months in reverse chronological order ----
-  scale_y_discrete(limits = rev(month.name)) +
-
+scale_y_discrete(limits = rev(month.name)) +
+  
   # fill color ----
-  scale_fill_gradientn(colors = c("#2C5374","#778798", "#ADD8E6", "#EF8080", "#8B3A3A"), name = "Temp. (°C)") +
-
+scale_fill_gradientn(colors = c("#2C5374","#778798", "#ADD8E6", "#EF8080", "#8B3A3A"), name = "Temp. (°C)") +
+  
   # update labs & titles ----
-  labs(x = "Bottom Temperature (°C)",
-       title = "Bottom Temperatures at Mohawk Reef, Santa Barbara, CA",
-       subtitle = "Temperatures (°C) aggregated by month from 2005 - 2022") +
-
+labs(x = "Bottom Temperature (°C)",
+     title = "Bottom Temperatures at Mohawk Reef, Santa Barbara, CA",
+     subtitle = "Temperatures (°C) aggregated by month from 2005 - 2022") +
+  
   # apply theme ----
-  ggridges::theme_ridges(font_size = 13, grid = TRUE) +
-
+ggridges::theme_ridges(font_size = 13, grid = TRUE) +
+  
   # adjust theme options ----
-  theme(
-    axis.title.y = element_blank()
-  )
+theme(
+  axis.title.y = element_blank()
+)
 
 mko_ridges_plot
 ```
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Example 2:** CA Drought
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
 
 ```{r}
 #| eval: true
 #| echo: false
 #| message: false
-
+#| warning: false
 #..........................load packages.........................
+
 library(tidyverse)
-library(lubridate)
-library(geofacet)
 library(cowplot)
 library(showtext)
-
-#.............add fonts (must be downloaded & saved).............
-# font_add("alfa", "AlfaSlabOne-Regular.ttf")
-# font_add("sen", "Sen-Regular.ttf")
 
 #..........................read in data..........................
 drought_clean <- readRDS(here::here("clean-data", "us_drought.rds"))
 
-#..............................plot..............................
+#......................import google fonts.......................
+# load Google Fonts: https://fonts.google.com/ ----
+sysfonts::font_add_google(name = "Alfa Slab One", family = "alfa") # name = name as it appears on Google Fonts; family = a string that you'll refer to your imported font by
+sysfonts::font_add_google(name = "Sen", family = "sen")
 
-# color palette ----
+# automatically use {showtext} to render text for future devices ----
+showtext::showtext_auto()
+
+# tell showtext the resolution for the device ----
+showtext::showtext_opts(dpi = 300)
+
+#..........................color palette.........................
 colors <- c("#4D1212", "#9A2828", "#DE5A2C", "#DE922C", "#DEC02C", 
-            "#ABCAFA", "#77A3EA", "#5287DE", "#243CB9", "#152473")
-            
-# title & subtitle text ----
-ca_title = "Drought vs. Wet Conditions Across California"
-ca_subtitle = "Percent area experiencing drought versus wet conditions 2012 to 2022"
+            "#152473", "#243CB9", "#5287DE", "#77A3EA", "#ABCAFA")
 
-# plot ----   
-ca_plot <- drought_clean |> 
+#..............................plot..............................
+ca_plot <- drought_clean |>
+  
+  # filter for CA ----
   filter(state_abb == "CA") |> 
   
-  ggplot() + 
+  # make wet condition values negative by multiplying by -1 ----
+  mutate(perc_area = ifelse(test = grepl("D", condition) == T, yes = perc_area, no = perc_area * -1)) |>
   
-  # create area chart & add horizontal lines ----
-  geom_area(aes(x = date, y = value, fill = condition_long)) +
-  geom_hline(yintercept = 100, color = "#9B2F2F", linetype = 2) +
-  geom_hline(yintercept = 50, color = "#FF9861", linetype = 2) +
-  geom_hline(yintercept = -50, color = "#B7D2FF", linetype = 2) +
-  geom_hline(yintercept = -100, color = "#2F3F9B", linetype = 2) +
+  # initialize ggplot ----
+  ggplot(aes(x = date, y = perc_area, fill = condition_long)) + 
   
-  # set x-axis breaks ----
-  scale_x_date(date_labels = "'%y", date_breaks = "2 years") +
+  # create stacked area chart & horizontal lines ----
+  geom_area() +
+  geom_hline(yintercept = 100, color = "#303030", alpha = 0.55, linetype = 2) +
+  geom_hline(yintercept = 50, color = "#5B5B5B", alpha = 0.55, linetype = 2) +
+  geom_hline(yintercept = -50, color = "#5B5B5B", alpha = 0.55, linetype = 2) +
+  geom_hline(yintercept = -100, color = "#303030", alpha = 0.55, linetype = 2) +
   
   # set colors ----
   scale_fill_manual(values = colors) +
   
   # labs & titles ----
   labs(y = "% area",
-       title = ca_title,
-       subtitle = ca_subtitle) +
+       title = "Drought vs. Wet Conditions Across California",
+       subtitle = "Percent area experiencing drought versus wet conditions from 2012 to 2022") +
   
   # set theme ----
   theme_classic() +
@@ -143,38 +149,46 @@ ca_plot <- drought_clean |>
   # customize theme ----
   theme(
     
-    # background colors
-    legend.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"),
-    plot.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"), # 292828
+    # background colors 
+    plot.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"), 
     panel.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"),
     
-    # title & subtitle text
-    plot.title = element_text(color = "#303030", size = 16, face = "bold"), # family = "alfa", 
-    plot.subtitle = element_text(color = "#303030", size = 13), # family = "sen", 
+    # titles 
+    plot.title = element_text(color = "#303030", family = "alfa", size = 17, margin = margin(t = 5, r = 10, b = 5, l = 0)), 
+    plot.subtitle = element_text(color = "#303030", family = "sen", size = 13, margin = margin(t = 0, r = 10, b = 20, l = 0)), 
     
-    # legend
+    # legend 
     legend.direction = "horizontal",
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(color = "#303030"), # family = "sen", 
+    legend.text = element_text(color = "#303030", family = "sen", size = 8.5), # family = "sen", 
+    legend.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"),
+    legend.key.width = unit(3, 'cm'),
     
-    # axes
-    axis.text.y = element_blank(),
+    # axes 
     axis.title = element_blank(),
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(size = 10),
     axis.line = element_blank(),
     axis.ticks = element_blank()
-    
   ) +
   
-  # position legend ----
+  # update legend layout ----
   guides(fill = guide_legend(nrow = 2, byrow = TRUE, reverse = FALSE,
-                             label.position = "bottom", keywidth = 3)) 
+                             label.position = "bottom")) 
 
-ca_plot
+#........................add annotations.........................
+
+annotated_ca_plot <- cowplot::ggdraw(ca_plot) +
+  cowplot::draw_text(x = 0.915, y = 0.837, color = "#303030", text = "100% Drought", family = "sen", size = 11, fontface = "bold") + 
+  cowplot::draw_text(x = 0.92, y = 0.71, color = "#5B5B5B", text = "50% Drought", family = "sen", size = 11, fontface = "bold") + 
+  cowplot::draw_text(x = 0.945, y = 0.47, color = "#5B5B5B", text = "50% Wet", family = "sen", size = 11, fontface = "bold") + 
+  cowplot::draw_text(x = 0.94, y = 0.35, color = "#303030", text = "100% Wet", family = "sen", size = 11, fontface = "bold") 
+
+annotated_ca_plot
 ```
 
-
-## **Example 3:**
+## **Ex 3:**
 :::
 
 {{< include /sections/1-determine-data-types.qmd >}}
@@ -187,4 +201,5 @@ ca_plot
 
 {{< include /sections/5-final-touches.qmd >}}
 
-<!-- {{< include /sections/how-to-improve.qmd >}} -->
+{{< include /sections/6-practice-review.qmd >}}
+
