@@ -67,7 +67,9 @@ mko_ridges_plot <- mko_clean |>
 mko_ridges_plot
 ```
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
+## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
+
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
 
 Finally, we can update labels/titles, move/modify the appearance of our legend, and get creative by building a fully custom theme -- this requires some patience and a lot of fiddling. The [`{showtext} package`](https://github.com/yixuan/showtext) allows you to import [Google Fonts](https://fonts.google.com/) to use throughout your plot and requires a bit of setup at the start (see code below).
 
@@ -175,7 +177,7 @@ annotated_ca_plot
 ::: callout-note
 ## **Bonus!** Check out the [`{geofacet}` package](https://github.com/hafen/geofacet/) for arranging plots in the shape of the US (or other regions).
 
-A small, unrefined plot as an example: 
+An unrefined plot as an example: 
 
 ```{r}
 #| eval: true
@@ -212,7 +214,5 @@ all_states_plot <- drought_clean |>
 all_states_plot
 ```
 :::
-
-## **Ex 3:**
 
 :::

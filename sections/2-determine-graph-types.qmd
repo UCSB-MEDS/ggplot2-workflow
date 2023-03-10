@@ -40,7 +40,9 @@ We're presented with a few great options (boxplot, violin plot, ridgeline plot, 
 
 ![](media/ggridges.gif){fig-align="center"}
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
+## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
+
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
 
 We’re presented with a few options (line plot, stacked area chart, streamgraph) given our data. **Stacked area plots** are useful for displaying the evolution of the value of several groups on the same graphic (in our case, the evolution of `perc_area` for each `condition` group), so that's what I'll choose for this example: 
 
@@ -50,7 +52,5 @@ We’re presented with a few options (line plot, stacked area chart, streamgraph
 ## Stacked area plots should be used with caution.
 They are appropriate for studying the evolution of the whole (e.g. all drought categories through time) and the relative proportions of each group, but *not* for studying the evolution of each group -- it's very difficult to subtract the height of other groups at any given time point to calculate the value for a group of interest. 
 :::
-
-## **Ex 3:**
 
 :::

@@ -85,7 +85,9 @@ theme(
 mko_ridges_plot
 ```
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
+## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
+
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
 
 ```{r}
 #| eval: true
@@ -188,7 +190,6 @@ annotated_ca_plot <- cowplot::ggdraw(ca_plot) +
 annotated_ca_plot
 ```
 
-## **Ex 3:**
 :::
 
 {{< include /sections/1-determine-data-types.qmd >}}

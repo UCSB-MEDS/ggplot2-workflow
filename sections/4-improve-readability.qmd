@@ -63,7 +63,9 @@ mko_ridges_plot <- mko_clean |>
 mko_ridges_plot
 ```
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
+## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
+
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3.** CA Drought
 
 We've successfully plotted our drought vs. wet condition data through time for California, but we'll want to update the following so that our visualization is easier to interpret:
 
@@ -115,8 +117,5 @@ ca_plot <- drought_clean |>
 ca_plot
 
 ```
-
-
-## **Ex 3:**
 
 :::

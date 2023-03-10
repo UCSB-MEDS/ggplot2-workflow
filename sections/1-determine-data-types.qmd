@@ -38,7 +38,9 @@ set.seed(12345)
 
 We are working with both **numeric data** (bottom temperature, `Temp_bot`) and **categorical data** (months, `month`). Further we have several (well, *many*) observations per group (month).
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
+## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
+
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
 
 For this example, we'll be using the [#tidytuesday](https://github.com/rfordatascience/tidytuesday) [Drought Conditions in the US](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-06-14) data set (posted on June 14, 2022). 
 
@@ -63,7 +65,5 @@ drought_clean <- readRDS(here::here("clean-data", "us_drought.rds"))
 head(drought_clean, 12)
 ```
 Let's say we're interested in exploring trends in California drought and wet conditions from 2012 - 2022. We'll be working with one **categorical variable** (condition, `condition_long`), **one numeric variable** (percent area impacted, `perc_area`) and one **ordered numeric variable** (year, `year`).
-
-## **Ex 3:** tbd
 
 :::
