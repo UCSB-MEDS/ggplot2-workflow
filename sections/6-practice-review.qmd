@@ -2,7 +2,7 @@
 format: html
 ---
 
-## **`r fontawesome::fa("laptop-code", fill = "#5A5A5A", a11y = "sem")`** How do I get better / increase my confidence in creating data visualizations?
+## **`r fontawesome::fa("laptop-code", fill = "#5A5A5A", a11y = "sem")`** How do I get better / gain confidence in creating data visualizations?
 
 Creating beautiful and effective data visualizations is a skill that gets better with practice -- give [#tidytuesday](https://github.com/rfordatascience/tidytuesday) a whirl, enter a [Kaggle competition](https://www.kaggle.com/competitions), take a deep dive into aRtistry (check out [Ijeamaka Anyene's](https://ijeamaka-anyene.netlify.app/) amazing talk on creating radial visualizations with `ggplot2` - [slides](https://ijeamakaanyene.github.io/aRt_ggplot/index.html#1) & [recording](https://www.youtube.com/watch?v=h0i6KAahLY8&ab_channel=R-LadiesGlobal)), or simply start playing around with data that means something to you.
 
