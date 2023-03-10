@@ -6,7 +6,7 @@ format: html
 
 ::: panel-tabset
 
-## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Ex 1:** Ocean Temperatures
 
 We've successfully plotted our temperature data, but we'll want to update the following so that our visualization is easier to interpret: 
 
@@ -38,11 +38,14 @@ mko_avg <- mko_clean |>
 mko_ridges_plot <- mko_clean |> 
   group_by(month_name) |> 
   
-  # create ridgeline plot ----
+  
+  # initialize ggplot ----
   ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
+  
+  # create ridgeline plot ----
   ggridges::geom_density_ridges_gradient(rel_min_height = 0.01, scale = 3) + # rel_min_height cuts trailing tails (0.01 suggested); scale sets extent of overlap
   
-  # add vertical line at avg temp + annotation
+  # add vertical line at avg temp + annotation ----
   geom_vline(xintercept = mko_avg, linetype = "dashed", color = "black") +
   annotate(geom = "segment", x = 18, y = "April", xend = mko_avg, yend = "May",
            arrow = arrow(length = unit(3, "mm"))) + # this is mostly just a bunch of manual fiddling until the arrow is placed where I want it
@@ -60,9 +63,60 @@ mko_ridges_plot <- mko_clean |>
 mko_ridges_plot
 ```
 
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
 
-## **Example 2:**
+We've successfully plotted our drought vs. wet condition data through time for California, but we'll want to update the following so that our visualization is easier to interpret:
 
-## **Example 3:**
+- create a more intuitive color palette
+
+We might also choose to: 
+
+- highlight particular benchmark area cover percentages (e.g. 100% area cover affected by drought conditions) -- adding a horizontal line(s) is a great option for this
+
+Here, we'll use the [`{cowplot}` package](https://github.com/wilkelab/cowplot) to add annotations to our plot:
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#..........................load packages.........................
+library(tidyverse)
+library(cowplot)
+
+#..........................read in data..........................
+drought_clean <- readRDS(here::here("clean-data", "us_drought.rds"))
+
+#..........................color palette.........................
+colors <- c("#4D1212", "#9A2828", "#DE5A2C", "#DE922C", "#DEC02C", 
+            "#152473", "#243CB9", "#5287DE", "#77A3EA", "#ABCAFA")
+
+#..............................plot..............................
+ca_plot <- drought_clean |>
+  
+  # filter for CA ----
+  filter(state_abb == "CA") |> 
+  
+  # make wet condition values negative by multiplying by -1 ----
+  mutate(perc_area = ifelse(test = grepl("D", condition) == T, yes = perc_area, no = perc_area * -1)) |>
+  
+  # initialize ggplot ----
+  ggplot(aes(x = date, y = perc_area, fill = condition_long)) + 
+  
+  # create stacked area chart & horizontal lines ----
+  geom_area() +
+  geom_hline(yintercept = 100, color = "#303030", alpha = 0.55, linetype = 2) +
+  geom_hline(yintercept = 50, color = "#5B5B5B", alpha = 0.55, linetype = 2) +
+  geom_hline(yintercept = -50, color = "#5B5B5B", alpha = 0.55, linetype = 2) +
+  geom_hline(yintercept = -100, color = "#303030", alpha = 0.55, linetype = 2) +
+  
+  # set colors ----
+  scale_fill_manual(values = colors)
+
+ca_plot
+
+```
+
+
+## **Ex 3:**
 
 :::

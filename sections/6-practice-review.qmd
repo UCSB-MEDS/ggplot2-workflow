@@ -1,0 +1,22 @@
+---
+format: html
+---
+
+## **`r fontawesome::fa("laptop-code", fill = "#5A5A5A", a11y = "sem")`** How do I get better / increase my confidence in creating data visualizations?
+
+Creating beautiful and effective data visualizations is a skill that gets better with practice -- give [#tidytuesday](https://github.com/rfordatascience/tidytuesday) a whirl, enter a [Kaggle competition](https://www.kaggle.com/competitions), take a deep dive into aRtistry (check out [Ijeamaka Anyene's](https://ijeamaka-anyene.netlify.app/) amazing talk on creating radial visualizations with `ggplot2` - [slides](https://ijeamakaanyene.github.io/aRt_ggplot/index.html#1) & [recording](https://www.youtube.com/watch?v=h0i6KAahLY8&ab_channel=R-LadiesGlobal)), or simply start playing around with data that means something to you.
+
+## **`r fontawesome::fa("book-open-reader", fill = "#5A5A5A", a11y = "sem")`** Review
+
+Take a look back at [Allison Horst's](https://allisonhorst.github.io/) data viz lectures and labs from EDS 221 for a `{ggplot2}` review, practice, and a reminder about important considerations for making responsible data visualizations:
+
+- [**Lecture 15:** The (layered) grammar of graphics & data viz considerations](https://docs.google.com/presentation/d/e/2PACX-1vSpUdai7BTXprh3dwSNBpJymNGUIOFhEgQn5XbQWZhWy8EpUyd64Lem08YK_kc6tP0iyoJ5wRAVvSYe/pub?start=false&loop=false&delayms=3000&slide=id.p)
+-[**Lecture 16:** Data exploration adn visualization continued](https://docs.google.com/presentation/d/e/2PACX-1vR1QB0S3AfBfdJZ1nnhUw2iKSxV83GDc5l9BYPC6yQhxBdnzRpAAZ2lh7QWhX4kY65Uf_q0yK9FtHmW/pub?start=false&loop=false&delayms=3000&slide=id.p)
+- [**Lab:** Customized Data Visualization in `ggplot2`](https://allisonhorst.github.io/eds221-day8-comp/data_viz.html)
+
+There are lots of other great data viz resources out there as well. Check out:
+
+- [A ggplot2 Tutorial for Beautiful Plotting in R
+](https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/), by [Cédric Scherer](https://www.cedricscherer.com/): a super comprehensive `{ggplot2}` tutorial that also includes a bunch of awesome interactive data viz examples (leveraging existing JavaScript libraries)
+- [Beautifully Annotated: Enhancing your ggplots with Text](https://www.cararthompson.com/talks/rl-cambridge-beautifully-annotated/), by [Cara Thompson](https://www.cararthompson.com/index.html): blogpost + workshop slides; honestly one of the best tutorials on annotating ggplots that I've ever come across 
+- Search [#tidytuesday](https://twitter.com/search?q=%23tidytuesday&src=typed_query) on Twitter to explore an endless supply of incredibly creative data visualizations -- *this is seriously such an incredible way to learn new plotting tools/approaches and find inspiration for your next plot!*

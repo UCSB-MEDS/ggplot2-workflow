@@ -8,7 +8,7 @@ In order to determine the most appropriate and effective chart type, you first n
 
 ::: panel-tabset
 
-## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Ex 1:** Ocean Temperatures
 
 Let's say we're interested in visualizing **temporal variation in bottom temperature** at Mohawk Reef (Santa Barbara, CA), a near-shore rocky reef and one of the [Santa Barbara Coastal (SBC) LTER](https://sbclter.msi.ucsb.edu/) research sites. To do so, we'll use SBC LTER data, [SBC LTER: Ocean: Currents and Biogeochemistry: Moored CTD and ADCP data from Mohawk Outside Spar (MKO), ongoing since 2005](https://pasta.lternet.edu/package/eml/knb-lter-sbc/2007/16), available for download on the [EDI Data Portal](https://portal.edirepository.org/nis/home.jsp).
 
@@ -38,8 +38,32 @@ set.seed(12345)
 
 We are working with both **numeric data** (bottom temperature, `Temp_bot`) and **categorical data** (months, `month`). Further we have several (well, *many*) observations per group (month).
 
-## **Example 2:** tbd
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
 
-## **Example 3:** tbd
+For this example, we'll be using the [#tidytuesday](https://github.com/rfordatascience/tidytuesday) [Drought Conditions in the US](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-06-14) data set (posted on June 14, 2022). 
+
+::: callout-important
+## TidyTuesday provides "tamed", but not fully wrangled data
+Learn more about the original data, courtesy of [US Drought Monitor](https://droughtmonitor.unl.edu/DmData/DataDownload/DSCI.aspx), by checking out the [tidytuesday GitHub repo](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-06-14).
+:::
+
+The original [drought.csv](https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-06-14/drought.csv) data file (as posted on the tidytuesday GitHub repo) contains 14 variables and >73,000 observations. Weekly assessments of drought & wet conditions are made for each US state (and the District of Columbia) between 1895 - 2022 and reported as percent land area falling into each [Drought Classification Category](https://droughtmonitor.unl.edu/About/AbouttheData/DroughtClassification.aspx). Cleaning involves formatting dates and state names, converting drought classification categories and associated area percentages from wide to long format, filtering for years of interest (2012 - 2022), among other things (find the [cleaning script here](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/data-wrangling/drought.R)).
+
+Below are the first 12 rows from our cleaned data:
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+
+#......................read in cleaned data......................
+drought_clean <- readRDS(here::here("clean-data", "us_drought.rds"))
+
+#..................print first 12 rows of data...................
+head(drought_clean, 12)
+```
+Let's say we're interested in exploring trends in California drought and wet conditions from 2012 - 2022. We'll be working with one **categorical variable** (condition, `condition_long`), **one numeric variable** (percent area impacted, `perc_area`) and one **ordered numeric variable** (year, `year`).
+
+## **Ex 3:** tbd
 
 :::

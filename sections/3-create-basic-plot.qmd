@@ -6,7 +6,7 @@ format: html
 
 ::: panel-tabset
 
-## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Ex 1:** Ocean Temperatures
 
 Let's start by creating a super basic **ridgeline plot of aggregate bottom temperatures by month** using the [`{ggridges}` package](https://github.com/wilkelab/ggridges/):
 
@@ -23,17 +23,51 @@ mko_clean <- readRDS(here::here("clean-data", "mohawk_temps.rds"))
 
 #..............................plot..............................
 mko_ridges_plot <- mko_clean |> 
+  
+  # group by month ----
   group_by(month_name) |> 
   
-  # create ridgeline plot ----
+  # intialize ggplot ----
   ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
+  
+  # create ridgeline plot ----
   ggridges::geom_density_ridges_gradient() 
 
 mko_ridges_plot
 ```
 
-## **Example 2:**
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
 
-## **Example 3:**
+Let's start by creating a super basic **stacked area plot of percent area by condition category through time** for California only. Inspired by a number of #tidytueday submissions (I searched **#tidytuesday drought** on Twitter; see those by [@sponce1](https://twitter.com/sponce1/status/1537551241638731776), [@KittJonathan](https://twitter.com/KittJonathan/status/1536643331760996352) [@BlakeRobMills](https://twitter.com/BlakeRobMills/status/1536908360896978944), [@leeolney3](https://twitter.com/leeolney3/status/1536586800860385280), [@neilgcurrie](https://twitter.com/neilgcurrie/status/1536740334700441600), [@Topenomics](https://twitter.com/Topenomics/status/1536668942181494784)), I want to display my drought conditions as positive values and wet conditions as negative values. To do so, we'll need to multiply all wet category values by -1:
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#..........................load packages.........................
+library(tidyverse)
+
+#..........................read in data..........................
+drought_clean <- readRDS(here::here("clean-data", "us_drought.rds"))
+
+#..............................plot..............................
+ca_plot <- drought_clean |>
+  
+  # filter for CA ----
+  filter(state_abb == "CA") |> 
+  
+  # make wet condition values negative by multiplying by -1 ----
+  mutate(perc_area = ifelse(test = grepl("D", condition) == T, yes = perc_area, no = perc_area * -1)) |>
+  
+  # initialize ggplot ----
+  ggplot(aes(x = date, y = perc_area, fill = condition_long)) + 
+  
+  # create stacked area chart ----
+  geom_area() 
+
+ca_plot
+```
+
+## **Ex 3:**
 
 :::

@@ -34,14 +34,23 @@ From [Data to Viz](https://www.data-to-viz.com/) (in my opinion) the *best* plac
 
 ::: panel-tabset
 
-## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Example 1:** Ocean Temperatures
+## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Ex 1:** Ocean Temperatures
 
 We're presented with a few great options (boxplot, violin plot, ridgeline plot, density plot, histogram) given our data. I'm partial to the **ridgeline plot** -- I find it an intuitive way to view changes in temperature distributions through time, so that's what I'll choose for this example:
 
 ![](media/ggridges.gif){fig-align="center"}
 
-## **Example 2:**
+## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 2:** CA Drought
 
-## **Example 3:**
+We’re presented with a few options (line plot, stacked area chart, streamgraph) given our data. **Stacked area plots** are useful for displaying the evolution of the value of several groups on the same graphic (in our case, the evolution of `perc_area` for each `condition` group), so that's what I'll choose for this example: 
+
+![](media/stackedarea.gif){fig-align="center"}
+
+::: callout-important
+## Stacked area plots should be used with caution.
+They are appropriate for studying the evolution of the whole (e.g. all drought categories through time) and the relative proportions of each group, but *not* for studying the evolution of each group -- it's very difficult to subtract the height of other groups at any given time point to calculate the value for a group of interest. 
+:::
+
+## **Ex 3:**
 
 :::
