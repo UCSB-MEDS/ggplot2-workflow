@@ -33,7 +33,7 @@ mko_clean <- readRDS(here::here("clean-data", "mohawk_temps.rds"))
 
 #....................randomly sample 10 rows.....................
 set.seed(12345) 
-(random_mko_sample <- dplyr::sample_n(mko_clean, 10))
+(random_mko_sample <- dplyr::slice_sample(mko_clean, n = 10))
 ```
 
 We are working with both **numeric data** (bottom temperature, `Temp_bot`) and **categorical data** (months, `month`). Further we have several (well, *many*) observations per group (month).
