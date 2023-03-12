@@ -61,7 +61,6 @@ mko_avg <- mko_clean |>
   pull() 
 
 #..............................plot..............................
-
 mko_ridges_plot <- mko_clean |> 
   group_by(month_name) |> 
   
