@@ -148,7 +148,7 @@ ca_plot <- drought_clean |>
     legend.direction = "horizontal",
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(color = "#303030", family = "sen", size = 8.5), # family = "sen", 
+    legend.text = element_text(color = "#303030", family = "sen", size = 8.5),
     legend.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"),
     legend.key.width = unit(3, 'cm'),
     
@@ -165,6 +165,7 @@ ca_plot <- drought_clean |>
                              label.position = "bottom")) 
 
 #........................add annotations.........................
+# NOTE: x & y values based on rendering within this Quarto doc -- you will likely have to adjust them!
 annotated_ca_plot <- cowplot::ggdraw(ca_plot) +
   cowplot::draw_text(x = 0.915, y = 0.837, color = "#303030", text = "100% Drought", family = "sen", size = 11, fontface = "bold") + 
   cowplot::draw_text(x = 0.92, y = 0.71, color = "#5B5B5B", text = "50% Drought", family = "sen", size = 11, fontface = "bold") + 

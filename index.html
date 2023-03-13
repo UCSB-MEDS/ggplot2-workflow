@@ -179,6 +179,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
+<p><strong>This ocean temperatures plot explores the following tools &amp; approaches:</strong></p>
+<ul>
+<li>a ggplot extension package, <code>{ggridges}</code>, to create a ridge line plot</li>
+<li>styling a plot with a pre-built theme</li>
+<li>adding an annotation layer</li>
+</ul>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
@@ -186,6 +192,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><strong>This wages plot explores the following tools and approaches:</strong></p>
+<ul>
+<li>facet wrapping panels by groups of data</li>
+<li>the <code>{scales}</code> package for modifying axis labels</li>
+<li>the <code>{ggtext}</code> package for applying css styling to plot text</li>
+<li>modifying components of our plot’s theme</li>
+</ul>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <div class="cell">
@@ -193,7 +206,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><strong>This drought plot explores the following tools &amp; approaches:</strong></p>
+<ul>
+<li>the <code>{cowplot}</code> package for adding annotations</li>
+<li>the <code>{showtext}</code> package for loading &amp; applying Google fonts</li>
+<li>modifying (event more) components of our plot’s theme</li>
+</ul>
 </div>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+There are many ways to create the same visualization!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It’s important to remember that there are lots of different tools, packages, and approaches for building similarly-looking plots. My approach may not be what makes most intuitive sense to you – I encourage you to explore documentation and additional examples!</p>
 </div>
 </div>
 <section id="step-1.-what-data-types" class="level2">
@@ -275,7 +307,7 @@ TidyTuesday provides “tamed”, but not fully wrangled data
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>) </span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>(random_jobs_sample <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">slice_sample</span>(select_jobs, <span class="at">n =</span> <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 16
+<pre><code># A tibble: 10 × 17
     year major…¹ minor…² occup…³ total…⁴ worke…⁵ worke…⁶ perce…⁷ perce…⁸ total…⁹
    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
  1  2016 Educat… Arts, … Dancer…    6556    1468    5088    22.4    77.6   31342
@@ -288,12 +320,12 @@ TidyTuesday provides “tamed”, but not fully wrangled data
  8  2016 Manage… Manage… Legisl…   13966    7431    6535    53.2    46.8   65592
  9  2016 Service Protec… Police…  669550  582716   86834    87.0    13.0   62852
 10  2016 Service Person… Hairdr…  447533   52211  395322    11.7    88.3   26146
-# … with 6 more variables: total_earnings_male &lt;dbl&gt;,
+# … with 7 more variables: total_earnings_male &lt;dbl&gt;,
 #   total_earnings_female &lt;dbl&gt;, difference_earnings_male_female &lt;dbl&gt;,
-#   wage_percent_of_male &lt;dbl&gt;, avg_salary &lt;dbl&gt;, perc_group &lt;fct&gt;, and
-#   abbreviated variable names ¹​major_category, ²​minor_category, ³​occupation,
-#   ⁴​total_workers, ⁵​workers_male, ⁶​workers_female, ⁷​percent_male,
-#   ⁸​percent_female, ⁹​total_earnings</code></pre>
+#   wage_percent_of_male &lt;dbl&gt;, avg_salary &lt;dbl&gt;, perc_group &lt;fct&gt;,
+#   perc_group_label &lt;fct&gt;, and abbreviated variable names ¹​major_category,
+#   ²​minor_category, ³​occupation, ⁴​total_workers, ⁵​workers_male,
+#   ⁶​workers_female, ⁷​percent_male, ⁸​percent_female, ⁹​total_earnings</code></pre>
 </div>
 </div>
 <p>We are working with <strong>categorical data</strong> (occupations, <code>occupation</code>), and <strong>numeric data</strong> ($ earned by men and women in a given occupation, <code>total_earnings_male</code> &amp; <code>total_earnings_female</code>).</p>
@@ -471,14 +503,15 @@ Stacked area plots should be used with caution.
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>select_jobs <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"clean-data"</span>, <span class="st">"select_jobs.rds"</span>)) </span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#..............................plot..............................</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>earnings_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(select_jobs) <span class="sc">+</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create dumbbells</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">xend =</span> occupation, <span class="at">y =</span> total_earnings_female, <span class="at">yend =</span> total_earnings_male)) <span class="sc">+</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> total_earnings_male)) <span class="sc">+</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> total_earnings_female)) </span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>earnings_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize ggplot ----</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>earnings_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(select_jobs) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create dumbbells ----</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">xend =</span> occupation, <span class="at">y =</span> total_earnings_female, <span class="at">yend =</span> total_earnings_male)) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> total_earnings_male)) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> total_earnings_female)) </span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>earnings_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -584,7 +617,7 @@ Stacked area plots should be used with caution.
 <li>color-code male vs.&nbsp;female points</li>
 <li>flip the axes so that we can more easily read the long occupation names</li>
 <li>reorder occupations (I’ll arrange them in descending order of average salary)</li>
-<li>facet wrap by our three groupings (<code>perc_group</code>: occupations that are 75%+ women, 45-55% women, and 75%+ men)</li>
+<li>facet wrap by our three groupings (<code>perc_group</code>: occupations that are 75%+ female, 45-55% female, and 75%+ male) and add labels denoting which facet is which</li>
 </ul>
 <p>We might also choose to:</p>
 <ul>
@@ -808,7 +841,7 @@ Stacked area plots should be used with caution.
 <span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>,</span>
 <span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
 <span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#303030"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="fl">8.5</span>), <span class="co"># family = "sen", </span></span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#303030"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="fl">8.5</span>),</span>
 <span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"#9B9B9B"</span>, <span class="at">color =</span> <span class="st">"#9B9B9B"</span>),</span>
 <span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">'cm'</span>),</span>
 <span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -825,13 +858,14 @@ Stacked area plots should be used with caution.
 <span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>                             <span class="at">label.position =</span> <span class="st">"bottom"</span>)) </span>
 <span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a><span class="co">#........................add annotations.........................</span></span>
-<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a>annotated_ca_plot <span class="ot">&lt;-</span> cowplot<span class="sc">::</span><span class="fu">ggdraw</span>(ca_plot) <span class="sc">+</span></span>
-<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">draw_text</span>(<span class="at">x =</span> <span class="fl">0.915</span>, <span class="at">y =</span> <span class="fl">0.837</span>, <span class="at">color =</span> <span class="st">"#303030"</span>, <span class="at">text =</span> <span class="st">"100% Drought"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span> </span>
-<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">draw_text</span>(<span class="at">x =</span> <span class="fl">0.92</span>, <span class="at">y =</span> <span class="fl">0.71</span>, <span class="at">color =</span> <span class="st">"#5B5B5B"</span>, <span class="at">text =</span> <span class="st">"50% Drought"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span> </span>
-<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">draw_text</span>(<span class="at">x =</span> <span class="fl">0.945</span>, <span class="at">y =</span> <span class="fl">0.47</span>, <span class="at">color =</span> <span class="st">"#5B5B5B"</span>, <span class="at">text =</span> <span class="st">"50% Wet"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span> </span>
-<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">draw_text</span>(<span class="at">x =</span> <span class="fl">0.94</span>, <span class="at">y =</span> <span class="fl">0.35</span>, <span class="at">color =</span> <span class="st">"#303030"</span>, <span class="at">text =</span> <span class="st">"100% Wet"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) </span>
-<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>annotated_ca_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: x &amp; y values based on rendering within this Quarto doc -- you will likely have to adjust them!</span></span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>annotated_ca_plot <span class="ot">&lt;-</span> cowplot<span class="sc">::</span><span class="fu">ggdraw</span>(ca_plot) <span class="sc">+</span></span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">draw_text</span>(<span class="at">x =</span> <span class="fl">0.915</span>, <span class="at">y =</span> <span class="fl">0.837</span>, <span class="at">color =</span> <span class="st">"#303030"</span>, <span class="at">text =</span> <span class="st">"100% Drought"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span> </span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">draw_text</span>(<span class="at">x =</span> <span class="fl">0.92</span>, <span class="at">y =</span> <span class="fl">0.71</span>, <span class="at">color =</span> <span class="st">"#5B5B5B"</span>, <span class="at">text =</span> <span class="st">"50% Drought"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span> </span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">draw_text</span>(<span class="at">x =</span> <span class="fl">0.945</span>, <span class="at">y =</span> <span class="fl">0.47</span>, <span class="at">color =</span> <span class="st">"#5B5B5B"</span>, <span class="at">text =</span> <span class="st">"50% Wet"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span> </span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">draw_text</span>(<span class="at">x =</span> <span class="fl">0.94</span>, <span class="at">y =</span> <span class="fl">0.35</span>, <span class="at">color =</span> <span class="st">"#303030"</span>, <span class="at">text =</span> <span class="st">"100% Wet"</span>, <span class="at">family =</span> <span class="st">"sen"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) </span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>annotated_ca_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>

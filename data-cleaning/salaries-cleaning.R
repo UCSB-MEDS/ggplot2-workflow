@@ -56,67 +56,15 @@ jobs_for_plotting <- jobs_gender_clean |>
     percent_female >= 45 & percent_female <= 55 ~ "f50",
     percent_male >= 75 ~"m75"
   )) |> 
-  mutate(perc_group = fct_relevel(perc_group, "f75", "f50", "m75")) |> 
+  mutate(perc_group_label = case_when(
+    percent_female >= 75 ~ "Occupations that are 75%+ female",
+    percent_female >= 45 & percent_female <= 55 ~ "Occupations that are 45-55% female",
+    percent_male >= 75 ~ "Occupations that are 75%+ male"
+  )) |> 
+  mutate(perc_group = fct_relevel(perc_group, "f75", "f50", "m75"),
+         perc_group_label = fct_relevel(perc_group_label, "Occupations that are 75%+ female", "Occupations that are 45-55% female", "Occupations that are 75%+ male")) |> 
   drop_na(perc_group) |> 
   filter(occupation %in% select_occupations)
 
 # saveRDS(jobs_for_plotting, here::here("clean-data", "select_jobs.rds"))
-
-#..............................plot..............................
-
-# create df for labels
-plot_labels <- data.frame(
-  label = c("Occupations that are 75%+ women", "Occupations that are 45-55% women", "Occupations that are 75%+ men"),
-  perc_group = c("f75", "f50", "m75") #,
-  # x = c(3, 3, 3),
-  # y = c(110800, 113000, 114000)
-)
-
-# plot
-earnings_plot <- ggplot(jobs_for_plotting) +
-  
-  # create dumbbells
-  geom_segment(aes(x = reorder(occupation, avg_salary), xend = occupation, y = total_earnings_female, yend = total_earnings_male)) +
-  geom_point(aes(x = occupation, y = total_earnings_male), color = "#CD93D8", size = 2.5) +
-  geom_point(aes(x = occupation, y = total_earnings_female), color = "#6A1E99", size = 2.5) +
-  
-  # flip axes & facet wrap by group
-  coord_flip() +
-  facet_wrap(~perc_group, nrow = 3, scale = "free_y") +
-  
-  # add annotations
-  # geom_label(data = plot_labels, mapping = aes(x = Inf, y = Inf, label = label),
-  #            fill = "white", label.padding = unit(0.25, "lines"),
-  #            hjust = 1.05, vjust = 5) +
-  
-  # axis breaks & $ labels
-  scale_y_continuous(breaks = c(25000, 50000, 75000, 100000, 125000),
-                     labels = scales::label_dollar(scale = 0.001, suffix = "k")) + 
-  
-  # title & subtitle (add styling)
-  labs(title = "**Earnings by Occupation and Sex**",
-       subtitle = "Median earnings of full-time <span style='color:#CD93D8'>**male**</span> versus <span style='color:#6A1E99'>**female**</span> workers by occupation in 2016",
-       caption = "<span style='color:#919092'>*Data courtesy of TidyTuesday (March 5, 2019)*</span>") +
-  
-  # theme
-  theme_minimal() +
-  theme(
-    
-    # facet panels
-    strip.background = element_blank(),
-    strip.text.x = element_blank(),
-    panel.spacing = unit(1, "lines"),
-    
-    # title & subtitle
-    plot.title.position = "plot", # left-align plot title with left-edge of plot, not y-axis (see: https://github.com/tidyverse/ggplot2/issues/3252)
-    plot.title = element_markdown(), # # enable markdown text (ggtext)
-    plot.subtitle = element_markdown(margin = margin(t = 0, r = 0, b = 10, l = 0)), # enable markdown text (ggtext) 
-    plot.caption = element_markdown(margin = margin(t = 15, r = 0, b = 0, l = 0)), # enable markdown text (ggtext)  
-    
-    # axes
-    axis.title = element_blank(),
-    
-  )
-  
-earnings_plot
 

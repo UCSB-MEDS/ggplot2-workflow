@@ -50,42 +50,48 @@ mko_avg <- mko_clean |>
 mko_ridges_plot <- mko_clean |>
   
   # group by month ----
-group_by(month_name) |>
+  group_by(month_name) |>
   
   # create ridgeline plot ----
-ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
+  ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
   ggridges::geom_density_ridges_gradient(rel_min_height = 0.01, scale = 3) + # rel_min_height cuts trailing tails (0.01 suggested); scale sets extent of overlap
   
   # add vertical line at avg temp + annotation
   geom_vline(xintercept = mko_avg, linetype = "dashed", color = "black") +
   annotate(geom = "segment", x = 18, y = "April", xend = mko_avg, yend = "May",
            arrow = arrow(length = unit(3, "mm"))) + # this is mostly just a bunch of manual fiddling until the arrow is placed where I want it
-  annotate(geom = "text", x = 18, y = "April", label = paste0(" Avg Temp = ", mko_avg, "°C"), hjust = "left") + # same here
+  annotate(geom = "label", x = 18, y = "April", label = paste0(" Avg Temp = ", mko_avg, "°C"), hjust = "left") + # same here
   
   # set x-axis breaks ----
-scale_x_continuous(breaks = c(9, 12, 15, 18, 21)) +
+  scale_x_continuous(breaks = c(9, 12, 15, 18, 21)) +
   
   # arrange months in reverse chronological order ----
-scale_y_discrete(limits = rev(month.name)) +
+  scale_y_discrete(limits = rev(month.name)) +
   
   # fill color ----
-scale_fill_gradientn(colors = c("#2C5374","#778798", "#ADD8E6", "#EF8080", "#8B3A3A"), name = "Temp. (°C)") +
+  scale_fill_gradientn(colors = c("#2C5374","#778798", "#ADD8E6", "#EF8080", "#8B3A3A"), name = "Temp. (°C)") +
   
   # update labs & titles ----
-labs(x = "Bottom Temperature (°C)",
-     title = "Bottom Temperatures at Mohawk Reef, Santa Barbara, CA",
-     subtitle = "Temperatures (°C) aggregated by month from 2005 - 2022") +
+  labs(x = "Bottom Temperature (°C)",
+       title = "Bottom Temperatures at Mohawk Reef, Santa Barbara, CA",
+       subtitle = "Temperatures (°C) aggregated by month from 2005 - 2022") +
   
   # apply theme ----
-ggridges::theme_ridges(font_size = 13, grid = TRUE) +
+  ggridges::theme_ridges(font_size = 13, grid = TRUE) +
   
   # adjust theme options ----
-theme(
-  axis.title.y = element_blank()
-)
+  theme(
+    axis.title.y = element_blank()
+  )
 
 mko_ridges_plot
 ```
+
+**This ocean temperatures plot explores the following tools & approaches:**
+
+- a ggplot extension package, `{ggridges}`, to create a ridge line plot
+- styling a plot with a pre-built theme
+- adding an annotation layer
 
 ## **`r fontawesome::fa("money-bill-1", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Wages
 
@@ -96,72 +102,68 @@ mko_ridges_plot
 #| warning: false
 #..........................load packages.........................
 library(tidyverse)
-library(cowplot)
 library(scales)
 library(ggtext)
 
 #..........................import data...........................
 # use this dataset if you want to explore all occupations included in the original TidyTuesday dataset
 # all_jobs <- readRDS(here::here("clean-data", "all_jobs.rds")) 
-
 # filtered data for plotting (original data contains too many to plot at once)
 # includes only 10 occupations from each of the following categories (occupations that are 75%+ women, 45-55% women, and 75%+ men)
 select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds")) 
 
 #..............................plot..............................
-
-# create df for labels
-plot_labels <- data.frame(
-  label = c("Occupations that are 75%+ women", "Occupations that are 45-55% women", "Occupations that are 75%+ men"),
-  perc_group = factor(c("f75", "f50", "m75"), levels = c("f75", "f50", "m75")) 
-)
-
+# initialize ggplot ----
 earnings_plot <- ggplot(select_jobs) +
   
-  # create dumbbells
+  # create dumbbells ----
   geom_segment(aes(x = reorder(occupation, avg_salary), xend = occupation, y = total_earnings_female, yend = total_earnings_male)) +
   geom_point(aes(x = occupation, y = total_earnings_male), color = "#CD93D8", size = 2.5) +
   geom_point(aes(x = occupation, y = total_earnings_female), color = "#6A1E99", size = 2.5) +
   
-  # flip axes & facet wrap by group
+  # flip axes & facet wrap by group ----
   coord_flip() +
-  facet_wrap(~perc_group, nrow = 3, scale = "free_y") +
+  facet_wrap(~perc_group_label, nrow = 3, scale = "free_y") +
   
-  # add annotations
-  geom_label(data = plot_labels, mapping = aes(x = -Inf, y = -Inf, label = label),
-             hjust = -1, vjust = -1, fill = "white") +
-
-  # axis breaks & $ labels
+  # axis breaks & $ labels ----
   scale_y_continuous(breaks = c(25000, 50000, 75000, 100000, 125000),
                      labels = scales::label_dollar(scale = 0.001, suffix = "k")) + 
   
-  # title & subtitle (add styling)
+  # title & subtitle (add styling) ----
   labs(title = "**Earnings by Occupation and Sex**",
        subtitle = "Median earnings of full-time <span style='color:#CD93D8'>**male**</span> versus <span style='color:#6A1E99'>**female**</span> workers by occupation in 2016",
        caption = "<span style='color:#919092'>*Data courtesy of TidyTuesday (March 5, 2019)*</span>") +
   
-  # theme
+  # set theme ----
   theme_minimal() +
+  
+  # customize theme ----
   theme(
-    
-    # facet panels
+  
+    # facet panels 
     strip.background = element_blank(),
-    strip.text.x = element_blank(),
-    
-    # title & subtitle
+    strip.text.x = element_text(face = "bold"),
+  
+    # title & subtitle 
     plot.title.position = "plot", # left-align plot title with left-edge of plot, not y-axis (see: https://github.com/tidyverse/ggplot2/issues/3252)
-    plot.title = element_markdown(), # # enable markdown text (ggtext)
-    plot.subtitle = element_markdown(margin = margin(t = 0, r = 0, b = 10, l = 0)), # enable markdown text (ggtext) 
-    plot.caption = element_markdown(margin = margin(t = 15, r = 0, b = 0, l = 0)), # enable markdown text (ggtext)  
-    
-    # axes
+    plot.title = ggtext::element_textbox_simple(size = 20, lineheight = 1, padding = margin(t = 0, r = 0, b = 5, l = 0)), # enables markdown text & creates textbox
+    plot.subtitle = ggtext::element_textbox_simple(size = 13, lineheight = 1, padding = margin(t = 5, r = 0, b = 10, l = 0)), # enable markdown text & creates textbox
+    plot.caption = ggtext::element_markdown(margin = margin(t = 15, r = 0, b = 0, l = 0)), # enable markdown text 
+  
+    # axes 
     axis.title = element_blank(),
   
   )
-  
+
 earnings_plot
 ```
 
+**This wages plot explores the following tools and approaches:**
+
+- facet wrapping panels by groups of data
+- the `{scales}` package for modifying axis labels
+- the `{ggtext}` package for applying css styling to plot text
+- modifying components of our plot's theme
 
 ## **`r fontawesome::fa("sun-plant-wilt", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
 
@@ -191,8 +193,8 @@ showtext::showtext_opts(dpi = 300)
 
 #..........................color palette.........................
 colors <- c("#4D1212", "#9A2828", "#DE5A2C", "#DE922C", "#DEC02C", 
-            "#152473", "#243CB9", "#5287DE", "#77A3EA", "#ABCAFA")
-
+                     "#152473", "#243CB9", "#5287DE", "#77A3EA", "#ABCAFA")
+                     
 #..............................plot..............................
 ca_plot <- drought_clean |>
   
@@ -225,29 +227,30 @@ ca_plot <- drought_clean |>
   
   # customize theme ----
   theme(
-    
+  
     # background colors 
     plot.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"), 
     panel.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"),
-    
+  
     # titles 
     plot.title = element_text(color = "#303030", family = "alfa", size = 17, margin = margin(t = 5, r = 10, b = 5, l = 0)), 
-    plot.subtitle = element_text(color = "#303030", family = "sen", size = 13, margin = margin(t = 0, r = 10, b = 20, l = 0)), 
-    
+    plot.subtitle = element_text(color = "#303030", family = "sen", size = 13, margin = margin(t = 5, r = 10, b = 20, l = 0)), 
+  
     # legend 
     legend.direction = "horizontal",
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(color = "#303030", family = "sen", size = 8.5), # family = "sen", 
+    legend.text = element_text(color = "#303030", family = "sen", size = 8.5), 
     legend.background = element_rect(fill = "#9B9B9B", color = "#9B9B9B"),
     legend.key.width = unit(3, 'cm'),
-    
+  
     # axes 
     axis.title = element_blank(),
     axis.text.y = element_blank(),
     axis.text.x = element_text(size = 10),
     axis.line = element_blank(),
     axis.ticks = element_blank()
+    
   ) +
   
   # update legend layout ----
@@ -265,6 +268,17 @@ annotated_ca_plot <- cowplot::ggdraw(ca_plot) +
 annotated_ca_plot
 ```
 
+**This drought plot explores the following tools & approaches:**
+
+- the `{cowplot}` package for adding annotations
+- the `{showtext}` package for loading & applying Google fonts
+- modifying (event more) components of our plot's theme
+
+:::
+
+::: callout-note
+## There are many ways to create the same visualization!
+It's important to remember that there are lots of different tools, packages, and approaches for building similarly-looking plots. My approach may not be what makes most intuitive sense to you -- I encourage you to explore documentation and additional examples!
 :::
 
 {{< include /sections/1-determine-data-types.qmd >}}

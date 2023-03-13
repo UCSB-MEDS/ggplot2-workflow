@@ -70,7 +70,7 @@ We've successfully plotted our salary data for males and females by occupation, 
 - color-code male vs. female points
 - flip the axes so that we can more easily read the long occupation names
 - reorder occupations (I'll arrange them in descending order of average salary)
-- facet wrap by our three groupings (`perc_group`: occupations that are 75%+ women, 45-55% women, and 75%+ men)
+- facet wrap by our three groupings (`perc_group`: occupations that are 75%+ female, 45-55% female, and 75%+ male) and add labels denoting which facet is which
 
 We might also choose to: 
 
