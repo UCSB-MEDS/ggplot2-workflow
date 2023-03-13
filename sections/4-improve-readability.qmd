@@ -49,7 +49,7 @@ mko_ridges_plot <- mko_clean |>
   geom_vline(xintercept = mko_avg, linetype = "dashed", color = "black") +
   annotate(geom = "segment", x = 18, y = "April", xend = mko_avg, yend = "May",
            arrow = arrow(length = unit(3, "mm"))) + # this is mostly just a bunch of manual fiddling until the arrow is placed where I want it
-  annotate(geom = "text", x = 18, y = "April", label = paste0(" Avg Temp = ", mko_avg, "°C"), hjust = "left") + # same here
+  annotate(geom = "label", x = 18, y = "April", label = paste0(" Avg Temp = ", mko_avg, "°C"), hjust = "left") + # same here
 
   # set x-axis breaks ----
   scale_x_continuous(breaks = c(9, 12, 15, 18, 21)) +
@@ -74,7 +74,6 @@ We've successfully plotted our salary data for males and females by occupation, 
 
 We might also choose to: 
 
-- add labels to each panel that clearly describes the groupings (e.g. occupations that are 75% female)
 
 ```{r}
 #| eval: true
@@ -92,12 +91,21 @@ library(tidyverse)
 select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds")) 
 
 #..............................plot..............................
+# initialize ggplot ----
 earnings_plot <- ggplot(select_jobs) +
   
-  # create dumbbells
-  geom_segment(aes(x = occupation, xend = occupation, y = total_earnings_female, yend = total_earnings_male)) +
-  geom_point(aes(x = occupation, y = total_earnings_male)) +
-  geom_point(aes(x = occupation, y = total_earnings_female)) 
+  # create dumbbells ----
+  geom_segment(aes(x = reorder(occupation, avg_salary), xend = occupation, y = total_earnings_female, yend = total_earnings_male)) + # reorder occupation by avg_salary here
+  geom_point(aes(x = occupation, y = total_earnings_male), color = "#CD93D8", size = 2.5) +
+  geom_point(aes(x = occupation, y = total_earnings_female), color = "#6A1E99", size = 2.5) +
+  
+  # flip axes & facet wrap by group ----
+  coord_flip() +
+  facet_wrap(~perc_group_label, nrow = 3, scales = "free_y") + # "free_y" plots only the axis labels that exist in each group
+  
+  # axis breaks & $ labels ----
+  scale_y_continuous(labels = scales::label_dollar(scale = 0.001, suffix = "k"),
+                     breaks = c(25000, 50000, 75000, 100000, 125000)) 
 
 earnings_plot
 ```

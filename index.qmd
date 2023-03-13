@@ -123,7 +123,7 @@ earnings_plot <- ggplot(select_jobs) +
   
   # flip axes & facet wrap by group ----
   coord_flip() +
-  facet_wrap(~perc_group_label, nrow = 3, scale = "free_y") +
+  facet_wrap(~perc_group_label, nrow = 3, scales = "free_y") + # "free_y" plots only the axis labels that exist in each group
   
   # axis breaks & $ labels ----
   scale_y_continuous(breaks = c(25000, 50000, 75000, 100000, 125000),
@@ -281,6 +281,8 @@ annotated_ca_plot
 It's important to remember that there are lots of different tools, packages, and approaches for building similarly-looking plots. My approach may not be what makes most intuitive sense to you -- I encourage you to explore documentation and additional examples!
 :::
 
+If you need a high-level `{ggplot2}` review and/or a reminder of important considerations for building responsible data visualizations, take a look back at Allison Horst's lectures [15](https://docs.google.com/presentation/d/e/2PACX-1vSpUdai7BTXprh3dwSNBpJymNGUIOFhEgQn5XbQWZhWy8EpUyd64Lem08YK_kc6tP0iyoJ5wRAVvSYe/pub?start=false&loop=false&delayms=3000&slide=id.p) and [16](https://docs.google.com/presentation/d/e/2PACX-1vR1QB0S3AfBfdJZ1nnhUw2iKSxV83GDc5l9BYPC6yQhxBdnzRpAAZ2lh7QWhX4kY65Uf_q0yK9FtHmW/pub?start=false&loop=false&delayms=3000&slide=id.p) from EDS 221.
+
 {{< include /sections/1-determine-data-types.qmd >}}
 
 {{< include /sections/2-determine-graph-types.qmd >}}
@@ -291,5 +293,7 @@ It's important to remember that there are lots of different tools, packages, and
 
 {{< include /sections/5-final-touches.qmd >}}
 
-{{< include /sections/6-practice-review.qmd >}}
+{{< include /sections/6-notes.qmd >}}
+
+{{< include /sections/7-practice-review.qmd >}}
 

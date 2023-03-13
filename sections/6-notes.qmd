@@ -1,0 +1,72 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("pencil", fill = "#5A5A5A", a11y = "sem")` Notes & Words of Wisdom
+
+To be completely transparent, **these three visualizations took me ~2 weeks to complete** (including finding data, cleaning data, and visualizing data), even with borrowing code and taking inspiration from existing examples. *And* they can all still be improved! **Data visualization can be challenging, particularly when you get to the fine-tuning stage** -- it's important to take an iterative approach. Some notes on how I did this:
+
+- **add arguments one-by-one**: it's likely that you won't know all the arguments for each plotting function off the top of your head (and many may require a deep-dive on Google to discover). Apply those that you know first, identify what you want to tweak after, then craft a nice Google query to figure out what options you have. For example, after facet wrapping the wages plot (Example 2), I noticed *all* occupation names were included on each facet, rather than only those occupations that belong with each facet. I didn't know how to do this, so I Googled, *"plot only axis labels that belong with facet ggplot"*, which led me to [this stackoverflow post](https://stackoverflow.com/questions/31227658/ggplot2-facet-wrap-only-use-x-axis-labels-existing-in-each-group), where I found a solution (`facet_wrap(~perc_group_label, nrow = 3, scales = "free_y")`):
+
+```{r}
+#| eval: true
+#| echo: false
+#| message: false
+#| label: fig-charts
+#| fig-subcap: 
+#|   - "without `scales = 'free_y'`"
+#|   - "with `scales = 'free_y'`"
+#| layout-ncol: 2
+#..........................load packages.........................
+library(tidyverse)
+
+#..........................import data...........................
+select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds")) 
+
+#..............................plot1..............................
+# initialize ggplot ----
+earnings_plot1 <- ggplot(select_jobs) +
+  
+  # create dumbbells ----
+  geom_segment(aes(x = reorder(occupation, avg_salary), xend = occupation, y = total_earnings_female, yend = total_earnings_male)) + # reorder occupation by avg_salary here
+  geom_point(aes(x = occupation, y = total_earnings_male), color = "#CD93D8", size = 2.5) +
+  geom_point(aes(x = occupation, y = total_earnings_female), color = "#6A1E99", size = 2.5) +
+  
+  # flip axes & facet wrap by group ----
+  coord_flip() +
+  facet_wrap(~perc_group_label, nrow = 3)
+
+earnings_plot1
+
+#..............................plot2..............................
+# initialize ggplot ----
+earnings_plot2 <- ggplot(select_jobs) +
+  
+  # create dumbbells ----
+  geom_segment(aes(x = reorder(occupation, avg_salary), xend = occupation, y = total_earnings_female, yend = total_earnings_male)) + # reorder occupation by avg_salary here
+  geom_point(aes(x = occupation, y = total_earnings_male), color = "#CD93D8", size = 2.5) +
+  geom_point(aes(x = occupation, y = total_earnings_female), color = "#6A1E99", size = 2.5) +
+  
+  # flip axes & facet wrap by group ----
+  coord_flip() +
+  facet_wrap(~perc_group_label, nrow = 3, scales = "free_y")
+
+earnings_plot2
+```
+
+- **change one thing at a time, particularly when you get to the fine-tuning stage:** some plot elements are more finicky than others. For example, finding the right positioning of text ("100% Drought", "50% Drought", "50% Wet", "100% Wet") on the CA drought plot took lots of manual and incremental updates to the `x` and `y` arguments in `cowplot::draw_text()`. Updating all four text positions at once can make it challenging to tell what modifications worked and which didn't. Instead, update the `x` value for *just one text layer* until you have the horizontal placement as you like. Then update the `y` value until the vertical placement is as you like. Move to the next text layer and repeat.
+
+```{r}
+#| eval: false
+#| echo: true
+
+# adding and positioning text using {cowplot} to the Drought plot (Example 3)
+annotated_ca_plot <- cowplot::ggdraw(ca_plot) +
+  cowplot::draw_text(x = 0.915, y = 0.837, color = "#303030", text = "100% Drought", family = "sen", size = 11, fontface = "bold") + 
+  cowplot::draw_text(x = 0.92, y = 0.71, color = "#5B5B5B", text = "50% Drought", family = "sen", size = 11, fontface = "bold") + 
+  cowplot::draw_text(x = 0.945, y = 0.47, color = "#5B5B5B", text = "50% Wet", family = "sen", size = 11, fontface = "bold") + 
+  cowplot::draw_text(x = 0.94, y = 0.35, color = "#303030", text = "100% Wet", family = "sen", size = 11, fontface = "bold") 
+
+```
+
+- **Google is an invaluable resource** -- I *cannot* stress this enough! I've been using `{ggplot2}` for ~6 years now (okay, definitely not the longest time, but also not an insignificant amount of time?!?). I'd estimate that >90% of my time building these plots was spent Googling for documentation/examples, trying them out, seeing what worked/what didn't, rinsing/repeating. I certainly got frustrated, and I didn't figure out all the things I wanted to implement. Taking a breather and coming back to your work at a later time often helps. *Creating visualizations that are effective, eye-catching, and something that you're proud of takes persistence and patience, but you all are 100% capable.*
