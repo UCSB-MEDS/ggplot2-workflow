@@ -111,13 +111,10 @@ select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds"))
 #..............................plot..............................
 
 # create df for labels
-# plot_labels <- data.frame(
-#   label = c("Occupations that are 75%+ women", "Occupations that are 45-55% women", "Occupations that are 75%+ men"),
-#   perc_group = c("f75", "f50", "m75") ,
-#   x = c(8, 8, 8),
-#   y = c(-1, -1, -1)
-# )
-
+plot_labels <- data.frame(
+  label = c("Occupations that are 75%+ women", "Occupations that are 45-55% women", "Occupations that are 75%+ men"),
+  perc_group = factor(c("f75", "f50", "m75"), levels = c("f75", "f50", "m75")) 
+)
 
 earnings_plot <- ggplot(select_jobs) +
   
@@ -131,9 +128,9 @@ earnings_plot <- ggplot(select_jobs) +
   facet_wrap(~perc_group, nrow = 3, scale = "free_y") +
   
   # add annotations
-  # geom_label(data = plot_labels, mapping = aes(x = x, y = y, label = label),
-  #            hjust = -0.7, vjust = -1, fill = "white")
-  # 
+  geom_label(data = plot_labels, mapping = aes(x = -Inf, y = -Inf, label = label),
+             hjust = -1, vjust = -1, fill = "white") +
+
   # axis breaks & $ labels
   scale_y_continuous(breaks = c(25000, 50000, 75000, 100000, 125000),
                      labels = scales::label_dollar(scale = 0.001, suffix = "k")) + 
