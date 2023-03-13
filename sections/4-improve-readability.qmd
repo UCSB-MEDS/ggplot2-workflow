@@ -72,6 +72,10 @@ We've successfully plotted our salary data for males and females by occupation, 
 - reorder occupations (I'll arrange them in descending order of average salary)
 - facet wrap by our three groupings (`perc_group`: occupations that are 75%+ women, 45-55% women, and 75%+ men)
 
+We might also choose to: 
+
+- add labels to each panel that clearly describes the groupings (e.g. occupations that are 75% female)
+
 ```{r}
 #| eval: true
 #| echo: true
