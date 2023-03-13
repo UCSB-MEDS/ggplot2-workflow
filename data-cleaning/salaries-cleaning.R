@@ -3,9 +3,6 @@
 
 #..........................load packages.........................
 library(tidyverse)
-library(cowplot)
-library(scales)
-library(ggtext)
 
 #..........................import data...........................
 jobs_gender <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv")
