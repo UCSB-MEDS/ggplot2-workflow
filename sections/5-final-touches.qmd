@@ -69,11 +69,81 @@ mko_ridges_plot
 
 ## **`r fontawesome::fa("money-bill-1", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Wages
 
+Finally, we can add/style titles and a caption, remove unnecessary axis labels, and modify the theme. The `{ggtext}` package allows for css styling of ggplot text -- I'll use this to color-code the words <span style='color:#CD93D8'>**male**</span> and <span style='color:#6A1E99'>**female**</span> (in the plot subtitle) to act as a legend.
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#..........................load packages.........................
+library(tidyverse)
+
+#..........................import data...........................
+# use this dataset if you want to explore all occupations included in the original TidyTuesday dataset
+# all_jobs <- readRDS(here::here("clean-data", "all_jobs.rds")) 
+
+# filtered data for plotting (original data contains too many to plot at once)
+# includes only 10 occupations from each of the following categories (occupations that are 75%+ women, 45-55% women, and 75%+ men)
+select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds")) 
+
+#..............................plot..............................
+# initialize ggplot ----
+earnings_plot <- ggplot(select_jobs) +
+  
+  # create dumbbells ----
+  geom_segment(aes(x = reorder(occupation, avg_salary), xend = occupation, y = total_earnings_female, yend = total_earnings_male)) + # reorder occupation by avg_salary here
+  geom_point(aes(x = occupation, y = total_earnings_male), color = "#CD93D8", size = 2.5) +
+  geom_point(aes(x = occupation, y = total_earnings_female), color = "#6A1E99", size = 2.5) +
+  
+  # flip axes & facet wrap by group ----
+  coord_flip() +
+  facet_wrap(~perc_group_label, nrow = 3, scales = "free_y") + # "free_y" plots only the axis labels that exist in each group
+  
+  # axis breaks & $ labels ----
+  scale_y_continuous(labels = scales::label_dollar(scale = 0.001, suffix = "k"),
+                     breaks = c(25000, 50000, 75000, 100000, 125000)) +
+  
+  # title & subtitle (add styling) ----
+  labs(title = "**Earnings by Occupation and Sex**",
+       subtitle = "Median earnings of full-time <span style='color:#CD93D8'>**male**</span> versus <span style='color:#6A1E99'>**female**</span> workers by occupation in 2016",
+       caption = "<span style='color:#919092'>*Data courtesy of TidyTuesday (March 5, 2019)*</span>") +
+  
+  # set theme ----
+  theme_minimal() +
+  
+  # customize theme ----
+  theme(
+  
+    # facet panels 
+    strip.background = element_blank(),
+    strip.text.x = element_text(face = "bold"),
+  
+    # title & subtitle 
+    plot.title.position = "plot", # left-align plot title with left-edge of plot, not y-axis (see: https://github.com/tidyverse/ggplot2/issues/3252)
+    plot.title = ggtext::element_textbox_simple(size = 20, lineheight = 1, padding = margin(t = 0, r = 0, b = 5, l = 0)), # enables markdown text & creates textbox
+    plot.subtitle = ggtext::element_textbox_simple(size = 13, lineheight = 1, padding = margin(t = 5, r = 0, b = 10, l = 0)), # enable markdown text & creates textbox
+    plot.caption = ggtext::element_markdown(margin = margin(t = 15, r = 0, b = 0, l = 0)), # enable markdown text 
+  
+    # axes 
+    axis.title = element_blank(),
+  
+  )
+
+earnings_plot
+```
+
 ## **`r fontawesome::fa("sun-plant-wilt", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
 
 Finally, we can update labels/titles, move/modify the appearance of our legend, and get creative by building a fully custom theme -- this requires some patience and a lot of fiddling. The [`{showtext} package`](https://github.com/yixuan/showtext) allows you to import [Google Fonts](https://fonts.google.com/) to use throughout your plot and requires a bit of setup at the start (see code below).
 
-Inspired by previous #tidytuesday submissions, I'm going to take a few more creative liberties (e.g. removing axes) with this plot than I did the last:
+Inspired by previous #tidytuesday submissions, I'm going to take a few more creative liberties (e.g. removing axes and labels) with this plot than I did the last two.
+
+::: callout-note
+## You will likely have to fiddle with text positioning using `draw_text()` to get it looking correct on your own computer
+
+The `x` and `y` values specified in `cowplot::draw_text()` were chosen based on how the plot renders within this particular `.qmd` file (the one rendering this page). If you copy this code and paste it into your own script, you may notice that the text positions shifts. You'll need to carefully adjust each `x` and `y` parameter until the text renders in a desired location.
+:::
+
 
 ```{r}
 #| eval: true
@@ -125,9 +195,8 @@ ca_plot <- drought_clean |>
   # set colors ----
   scale_fill_manual(values = colors) +
   
-  # labs & titles ----
-  labs(y = "% area",
-       title = "Drought vs. Wet Conditions Across California",
+  # titles ----
+  labs(title = "Drought vs. Wet Conditions Across California",
        subtitle = "Percent area experiencing drought versus wet conditions from 2012 to 2022") +
   
   # set theme ----

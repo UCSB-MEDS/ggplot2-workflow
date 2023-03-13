@@ -10,14 +10,14 @@ In order to determine the most appropriate and effective chart type, you first n
 
 ## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Ex 1:** Ocean Temperatures
 
-Let's say we're interested in visualizing **temporal variation in bottom temperature** at Mohawk Reef (Santa Barbara, CA), a near-shore rocky reef and one of the [Santa Barbara Coastal (SBC) LTER](https://sbclter.msi.ucsb.edu/) research sites. To do so, we'll use SBC LTER data, [SBC LTER: Ocean: Currents and Biogeochemistry: Moored CTD and ADCP data from Mohawk Outside Spar (MKO), ongoing since 2005](https://pasta.lternet.edu/package/eml/knb-lter-sbc/2007/16), available for download on the [EDI Data Portal](https://portal.edirepository.org/nis/home.jsp).
+Let's say we're interested in visualizing **temporal variation in bottom temperature** at Mohawk Reef (Santa Barbara, CA), a near-shore rocky reef and one of the [Santa Barbara Coastal (SBC) LTER](https://sbclter.msi.ucsb.edu/) research sites. To do so, we'll use SBC LTER data, [SBC LTER: Ocean: Currents and Biogeochemistry: Moored CTD and ADCP data from Mohawk Outside Spar (MKO), ongoing since 2005](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&identifier=2007), available for download on the [EDI Data Portal](https://portal.edirepository.org/nis/home.jsp).
 
 ::: callout-important
 ## Warning: Large data file!
 **Do not attempt to push raw data to GitHub** -- adding your `raw-data/` folder (or equivalent) to your `.gitignore` is highly recommmended. You may download the cleaned `mohawk_cleaned.rds` file [here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/clean-data/mohawk_temps.rds).
 :::
 
-The raw data file contains 87 variables and >473,000 observations across 18 years (2005 - 2022) (data have been interpolated to a 20 min interval) -- cleaning involves selecting only variables of interest,  coercing variables to the appropriate data type, adding month abbreviations, and assessing missing data (find the [cleaning script here](https://github.com/UCSB-MEDS/data-viz-practice/blob/main/data-wrangling/ocean-temps.R)).
+The raw data file contains 87 variables and >473,000 observations across 18 years (2005 - 2022) (data have been interpolated to a 20 min interval) -- cleaning involves selecting only variables of interest,  coercing variables to the appropriate data type, adding month abbreviations, and assessing missing data (find the [cleaning script here](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/data-cleaning/ocean-temps-cleaning.R)).
 
 Below are 10 randomly sampled rows from our cleaned data:
 
@@ -32,7 +32,7 @@ library(tidyverse)
 mko_clean <- readRDS(here::here("clean-data", "mohawk_temps.rds"))
 
 #....................randomly sample 10 rows.....................
-set.seed(12345) 
+set.seed(123) 
 (random_mko_sample <- dplyr::slice_sample(mko_clean, n = 10))
 ```
 
@@ -42,7 +42,7 @@ We are working with both **numeric data** (bottom temperature, `Temp_bot`) and *
 
 In honor of [Women's History Month](https://womenshistorymonth.gov/) we'll be using the [#tidytuesday](https://github.com/rfordatascience/tidytuesday) [Women in the Workforce](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-03-05) data set (posted on March 5, 2019) to explore **differences in salaries between males and females across occupations**.
 
-The original [jobs_gender.csv](https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv) data file (as posted on the tidytuesday GitHub repo) contains 12 variables and >2,000 observations -- each row represents a different occupation and associated wage and employment statistics for the years 2013 - 2016. Cleaning involves removing occupations with missing salary data and calculating some additional values (average salary for males and females by occupation, the percentage of males for each occupation type, difference in salary between males and females by occupation). Two cleaned data sets are available: [`all_jobs.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/all_jobs.rds) (contains all occupations with wage data from the original data set, across all available years) and [`select_jobs.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/select_jobs.rds) (contains 10 occupations from each of the following categories: occupations that are 75%+ women, 45-55% women, and 75%+ men, for the year 2016 only), which we'll use for plotting below. Find the [cleaning script here](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/data-wrangling/salaries.R).
+The original [jobs_gender.csv](https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv) data file (as posted on the tidytuesday GitHub repo) contains 12 variables and >2,000 observations -- each row represents a different occupation and associated wage and employment statistics for the years 2013 - 2016. Cleaning involves removing occupations with missing salary data and calculating some additional values (average salary for males and females by occupation, the percentage of males for each occupation type, difference in salary between males and females by occupation). Two cleaned data sets are available: [`all_jobs.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/all_jobs.rds) (contains all occupations with wage data from the original data set, across all available years) and [`select_jobs.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/select_jobs.rds) (contains 10 occupations from each of the following categories: occupations that are 75%+ women, 45-55% women, and 75%+ men, for the year 2016 only), which we'll use for plotting below. Find the [cleaning script here](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/data-cleaning/salaries-cleaning.R).
 
 ::: callout-important
 ## TidyTuesday provides "tamed", but not fully wrangled data
@@ -62,7 +62,7 @@ library(tidyverse)
 select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds"))
 
 #....................randomly sample 10 rows.....................
-set.seed(12345) 
+set.seed(123) 
 (random_jobs_sample <- dplyr::slice_sample(select_jobs, n = 10))
 ```
 

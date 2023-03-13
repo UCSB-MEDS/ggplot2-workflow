@@ -218,8 +218,7 @@ ca_plot <- drought_clean |>
   scale_fill_manual(values = colors) +
   
   # labs & titles ----
-  labs(y = "% area",
-       title = "Drought vs. Wet Conditions Across California",
+  labs(title = "Drought vs. Wet Conditions Across California",
        subtitle = "Percent area experiencing drought versus wet conditions from 2012 to 2022") +
   
   # set theme ----
@@ -272,7 +271,7 @@ annotated_ca_plot
 
 - the `{cowplot}` package for adding annotations
 - the `{showtext}` package for loading & applying Google fonts
-- modifying (event more) components of our plot's theme
+- modifying (even more) components of our plot's theme
 
 :::
 
