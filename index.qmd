@@ -7,6 +7,8 @@ format:
     theme: minty
     toc: true
     toc-location: left
+editor_options: 
+  chunk_output_type: console
 ---
 
 <br>
@@ -85,9 +87,7 @@ theme(
 mko_ridges_plot
 ```
 
-## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
-
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
+## **`r fontawesome::fa("money-bill-1", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Wages
 
 ```{r}
 #| eval: true
@@ -95,7 +95,85 @@ mko_ridges_plot
 #| message: false
 #| warning: false
 #..........................load packages.........................
+library(tidyverse)
+library(cowplot)
+library(scales)
+library(ggtext)
 
+#..........................import data...........................
+# use this dataset if you want to explore all occupations included in the original TidyTuesday dataset
+# all_jobs <- readRDS(here::here("clean-data", "all_jobs.rds")) 
+
+# filtered data for plotting (original data contains too many to plot at once)
+# includes only 10 occupations from each of the following categories (occupations that are 75%+ women, 45-55% women, and 75%+ men)
+select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds")) 
+
+#..............................plot..............................
+
+# create df for labels
+# plot_labels <- data.frame(
+#   label = c("Occupations that are 75%+ women", "Occupations that are 45-55% women", "Occupations that are 75%+ men"),
+#   perc_group = c("f75", "f50", "m75") ,
+#   x = c(8, 8, 8),
+#   y = c(-1, -1, -1)
+# )
+
+
+earnings_plot <- ggplot(select_jobs) +
+  
+  # create dumbbells
+  geom_segment(aes(x = reorder(occupation, avg_salary), xend = occupation, y = total_earnings_female, yend = total_earnings_male)) +
+  geom_point(aes(x = occupation, y = total_earnings_male), color = "#CD93D8", size = 2.5) +
+  geom_point(aes(x = occupation, y = total_earnings_female), color = "#6A1E99", size = 2.5) +
+  
+  # flip axes & facet wrap by group
+  coord_flip() +
+  facet_wrap(~perc_group, nrow = 3, scale = "free_y") +
+  
+  # add annotations
+  # geom_label(data = plot_labels, mapping = aes(x = x, y = y, label = label),
+  #            hjust = -0.7, vjust = -1, fill = "white")
+  # 
+  # axis breaks & $ labels
+  scale_y_continuous(breaks = c(25000, 50000, 75000, 100000, 125000),
+                     labels = scales::label_dollar(scale = 0.001, suffix = "k")) + 
+  
+  # title & subtitle (add styling)
+  labs(title = "**Earnings by Occupation and Sex**",
+       subtitle = "Median earnings of full-time <span style='color:#CD93D8'>**male**</span> versus <span style='color:#6A1E99'>**female**</span> workers by occupation in 2016",
+       caption = "<span style='color:#919092'>*Data courtesy of TidyTuesday (March 5, 2019)*</span>") +
+  
+  # theme
+  theme_minimal() +
+  theme(
+    
+    # facet panels
+    strip.background = element_blank(),
+    strip.text.x = element_blank(),
+    
+    # title & subtitle
+    plot.title.position = "plot", # left-align plot title with left-edge of plot, not y-axis (see: https://github.com/tidyverse/ggplot2/issues/3252)
+    plot.title = element_markdown(), # # enable markdown text (ggtext)
+    plot.subtitle = element_markdown(margin = margin(t = 0, r = 0, b = 10, l = 0)), # enable markdown text (ggtext) 
+    plot.caption = element_markdown(margin = margin(t = 15, r = 0, b = 0, l = 0)), # enable markdown text (ggtext)  
+    
+    # axes
+    axis.title = element_blank(),
+  
+  )
+  
+earnings_plot
+```
+
+
+## **`r fontawesome::fa("sun-plant-wilt", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
+
+```{r}
+#| eval: true
+#| echo: false
+#| message: false
+#| warning: false
+#..........................load packages.........................
 library(tidyverse)
 library(cowplot)
 library(showtext)

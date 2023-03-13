@@ -63,9 +63,42 @@ mko_ridges_plot <- mko_clean |>
 mko_ridges_plot
 ```
 
-## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
+## **`r fontawesome::fa("money-bill-1", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Wages
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3.** CA Drought
+We've successfully plotted our salary data for males and females by occupation, but our plot definitely needs some work. We'll want to update the following so that our visualization is easier to interpret:
+
+- color-code male vs. female points
+- flip the axes so that we can more easily read the long occupation names
+- reorder occupations (I'll arrange them in descending order of average salary)
+- facet wrap by our three groupings (`perc_group`: occupations that are 75%+ women, 45-55% women, and 75%+ men)
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#..........................load packages.........................
+library(tidyverse)
+
+#..........................import data...........................
+# use this dataset if you want to explore all occupations included in the original TidyTuesday dataset
+# all_jobs <- readRDS(here::here("clean-data", "all_jobs.rds")) 
+
+# filtered data for plotting (original data contains too many to plot at once)
+# includes only 10 occupations from each of the following categories (occupations that are 75%+ women, 45-55% women, and 75%+ men)
+select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds")) 
+
+#..............................plot..............................
+earnings_plot <- ggplot(select_jobs) +
+  
+  # create dumbbells
+  geom_segment(aes(x = occupation, xend = occupation, y = total_earnings_female, yend = total_earnings_male)) +
+  geom_point(aes(x = occupation, y = total_earnings_male)) +
+  geom_point(aes(x = occupation, y = total_earnings_female)) 
+
+earnings_plot
+```
+
+## **`r fontawesome::fa("sun-plant-wilt", fill = "#5A5A5A", a11y = "sem")` Ex 3.** CA Drought
 
 We've successfully plotted our drought vs. wet condition data through time for California, but we'll want to update the following so that our visualization is easier to interpret:
 

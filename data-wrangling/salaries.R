@@ -15,14 +15,14 @@ jobs_gender <- readr::read_csv("https://raw.githubusercontent.com/rfordatascienc
 #..........................wrangle data..........................
 jobs_gender_clean <- jobs_gender |> 
   mutate(percent_male = 100 - percent_female,
-         difference_earnings_male_female = total_earnings_male - total_earnings_female) |> 
+         difference_earnings_male_female = total_earnings_male - total_earnings_female,
+         avg_salary = ((total_earnings_male + total_earnings_female)/2)) |> 
   relocate(year, major_category, minor_category, occupation,
           total_workers, workers_male, workers_female,
           percent_male, percent_female,
           total_earnings, total_earnings_male, total_earnings_female, difference_earnings_male_female,
-          wage_percent_of_male) |> 
-  drop_na(total_earnings_female, total_earnings_female) |> 
-  mutate(avg_salary = ((total_earnings_male + total_earnings_female)/2))
+          wage_percent_of_male, avg_salary) |> 
+  drop_na(total_earnings_female, total_earnings_female) 
 
 # identify NAs
 see_NAs <- jobs_gender_clean %>% 
@@ -63,6 +63,16 @@ jobs_for_plotting <- jobs_gender_clean |>
 # saveRDS(jobs_for_plotting, here::here("clean-data", "select_jobs.rds"))
 
 #..............................plot..............................
+
+# create df for labels
+plot_labels <- data.frame(
+  label = c("Occupations that are 75%+ women", "Occupations that are 45-55% women", "Occupations that are 75%+ men"),
+  perc_group = c("f75", "f50", "m75") #,
+  # x = c(3, 3, 3),
+  # y = c(110800, 113000, 114000)
+)
+
+# plot
 earnings_plot <- ggplot(jobs_for_plotting) +
   
   # create dumbbells
@@ -73,6 +83,11 @@ earnings_plot <- ggplot(jobs_for_plotting) +
   # flip axes & facet wrap by group
   coord_flip() +
   facet_wrap(~perc_group, nrow = 3, scale = "free_y") +
+  
+  # add annotations
+  # geom_label(data = plot_labels, mapping = aes(x = Inf, y = Inf, label = label),
+  #            fill = "white", label.padding = unit(0.25, "lines"),
+  #            hjust = 1.05, vjust = 5) +
   
   # axis breaks & $ labels
   scale_y_continuous(breaks = c(25000, 50000, 75000, 100000, 125000),
@@ -90,6 +105,7 @@ earnings_plot <- ggplot(jobs_for_plotting) +
     # facet panels
     strip.background = element_blank(),
     strip.text.x = element_blank(),
+    panel.spacing = unit(1, "lines"),
     
     # title & subtitle
     plot.title.position = "plot", # left-align plot title with left-edge of plot, not y-axis (see: https://github.com/tidyverse/ggplot2/issues/3252)
@@ -103,3 +119,4 @@ earnings_plot <- ggplot(jobs_for_plotting) +
   )
   
 earnings_plot
+

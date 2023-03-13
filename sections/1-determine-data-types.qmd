@@ -38,11 +38,39 @@ set.seed(12345)
 
 We are working with both **numeric data** (bottom temperature, `Temp_bot`) and **categorical data** (months, `month`). Further we have several (well, *many*) observations per group (month).
 
-## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
+## **`r fontawesome::fa("money-bill-1", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Wages
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
+In honor of [Women's History Month](https://womenshistorymonth.gov/) we'll be using the [#tidytuesday](https://github.com/rfordatascience/tidytuesday) [Women in the Workforce](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-03-05) data set (posted on March 5, 2019) to explore **differences in salaries between males and females across occupations**.
 
-For this example, we'll be using the [#tidytuesday](https://github.com/rfordatascience/tidytuesday) [Drought Conditions in the US](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-06-14) data set (posted on June 14, 2022). 
+The original [jobs_gender.csv](https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-05/jobs_gender.csv) data file (as posted on the tidytuesday GitHub repo) contains 12 variables and >2,000 observations -- each row represents a different occupation and associated wage and employment statistics for the years 2013 - 2016. Cleaning involves removing occupations with missing salary data and calculating some additional values (average salary for males and females by occupation, the percentage of males for each occupation type, difference in salary between males and females by occupation). Two cleaned data sets are available: [`all_jobs.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/all_jobs.rds) (contains all occupations with wage data from the original data set, across all available years) and [`select_jobs.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/select_jobs.rds) (contains 10 occupations from each of the following categories: occupations that are 75%+ women, 45-55% women, and 75%+ men, for the year 2016 only), which we'll use for plotting below. Find the [cleaning script here](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/data-wrangling/salaries.R).
+
+::: callout-important
+## TidyTuesday provides "tamed", but not fully wrangled data
+Learn more about the original data, courtesy of the [Census Bureau](https://www.census.gov/data/tables/time-series/demo/industry-occupation/median-earnings.html), by checking out the [tidytuesday GitHub repo](https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-03-05).
+:::
+
+Below are 10 randomly sampled rows from our cleaned data (`select_jobs.rds`):
+
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#..........................load packages.........................
+library(tidyverse)
+
+#......................read in cleaned data......................
+select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds"))
+
+#....................randomly sample 10 rows.....................
+set.seed(12345) 
+(random_jobs_sample <- dplyr::slice_sample(select_jobs, n = 10))
+```
+
+We are working with **categorical data** (occupations, `occupation`), and **numeric data** ($ earned by men and women in a given occupation, `total_earnings_male` & `total_earnings_female`).
+
+## **`r fontawesome::fa("sun-plant-wilt", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
+
+For this example, we'll be using the [#tidytuesday](https://github.com/rfordatascience/tidytuesday) [Drought Conditions in the US](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-06-14) data set (posted on June 14, 2022) to explore **drought and wet conditions in the state of California through time**. 
 
 ::: callout-important
 ## TidyTuesday provides "tamed", but not fully wrangled data

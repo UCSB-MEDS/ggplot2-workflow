@@ -8,7 +8,7 @@ format: html
 
 ## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Ex 1:** Ocean Temperatures
 
-Let's start by creating a super basic **ridgeline plot of aggregate bottom temperatures by month** using the [`{ggridges}` package](https://github.com/wilkelab/ggridges/):
+Let's start by creating a super basic **ridgeline plot of aggregate bottom temperatures by month** using `geom_density_ridges_gradient()` from the [`{ggridges}` package](https://github.com/wilkelab/ggridges/):
 
 ```{r}
 #| eval: true
@@ -36,11 +36,39 @@ mko_ridges_plot <- mko_clean |>
 mko_ridges_plot
 ```
 
-## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
+## **`r fontawesome::fa("money-bill-1", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Wages
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
+Let's start by creating a super basic **dumbbell plot of male vs. female salaries by occupation** (using the `select_jobs.rds` file, though feel free to explore other occupations using `all_jobs.rds` on your own) -- we'll do this using `geom_segment()` to create the line connecting our points and `geom_point()` to create the points representing male and female salaries:
 
-Let's start by creating a super basic **stacked area plot of percent area by condition category through time** for California only. Inspired by a number of #tidytuesday submissions (I searched [**#tidytuesday drought**](https://twitter.com/search?q=%23tidytuesday%20drought&src=typed_query) on Twitter; see those by [@sponce1](https://twitter.com/sponce1/status/1537551241638731776), [@KittJonathan](https://twitter.com/KittJonathan/status/1536643331760996352) [@BlakeRobMills](https://twitter.com/BlakeRobMills/status/1536908360896978944), [@leeolney3](https://twitter.com/leeolney3/status/1536586800860385280), [@neilgcurrie](https://twitter.com/neilgcurrie/status/1536740334700441600), [@Topenomics](https://twitter.com/Topenomics/status/1536668942181494784)), I want to display my drought conditions as positive values and wet conditions as negative values. To do so, we'll need to multiply all wet category values by -1:
+```{r}
+#| eval: true
+#| echo: true
+#| message: false
+#..........................load packages.........................
+library(tidyverse)
+
+#..........................import data...........................
+# use this dataset if you want to explore all occupations included in the original TidyTuesday dataset
+# all_jobs <- readRDS(here::here("clean-data", "all_jobs.rds")) 
+
+# filtered data for plotting (original data contains too many to plot at once)
+# includes only 10 occupations from each of the following categories (occupations that are 75%+ women, 45-55% women, and 75%+ men)
+select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds")) 
+
+#..............................plot..............................
+earnings_plot <- ggplot(select_jobs) +
+  
+  # create dumbbells
+  geom_segment(aes(x = occupation, xend = occupation, y = total_earnings_female, yend = total_earnings_male)) +
+  geom_point(aes(x = occupation, y = total_earnings_male)) +
+  geom_point(aes(x = occupation, y = total_earnings_female)) 
+
+earnings_plot
+```
+
+## **`r fontawesome::fa("sun-plant-wilt", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
+
+Let's start by creating a super basic **stacked area plot of percent area by condition category through time** for California only, using `geom_area()`. Inspired by a number of #tidytuesday submissions (I searched [**#tidytuesday drought**](https://twitter.com/search?q=%23tidytuesday%20drought&src=typed_query) on Twitter; see those by [@sponce1](https://twitter.com/sponce1/status/1537551241638731776), [@KittJonathan](https://twitter.com/KittJonathan/status/1536643331760996352) [@BlakeRobMills](https://twitter.com/BlakeRobMills/status/1536908360896978944), [@leeolney3](https://twitter.com/leeolney3/status/1536586800860385280), [@neilgcurrie](https://twitter.com/neilgcurrie/status/1536740334700441600), [@Topenomics](https://twitter.com/Topenomics/status/1536668942181494784)), I want to display my drought conditions as positive values and wet conditions as negative values. To do so, we'll need to multiply all wet category values by -1:
 
 ```{r}
 #| eval: true

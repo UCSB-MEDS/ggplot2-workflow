@@ -40,9 +40,13 @@ We're presented with a few great options (boxplot, violin plot, ridgeline plot, 
 
 ![](media/ggridges.gif){fig-align="center"}
 
-## **`r fontawesome::fa("tree-city", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Urban Trees
+## **`r fontawesome::fa("money-bill-1", fill = "#5A5A5A", a11y = "sem")` Ex 2:** Wages
 
-## **`r fontawesome::fa("sun", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
+We’re presented with a few great options (grouped barplot, grouped scatter plot, lollipop plot) given our data. **Dumbbell plots**, also called Cleveland plots are a variant of the lollipop plot, which allow for comparison of two numeric values (in our case, male vs. female salaries) for each group (occupation), so that's what I'll choose for this example (plus, I was eager to try replicating a similar graphic by the US Census Bureau, shared by [Thomas Mock](https://twitter.com/thomas_mock) in the TidyTuesday data set [introduction tweet](https://twitter.com/thomas_mock/status/1102576601760448512)).
+
+![](media/dumbbell.gif){fig-align="center"}
+
+## **`r fontawesome::fa("sun-plant-wilt", fill = "#5A5A5A", a11y = "sem")` Ex 3:** CA Drought
 
 We’re presented with a few options (line plot, stacked area chart, streamgraph) given our data. **Stacked area plots** are useful for displaying the evolution of the value of several groups on the same graphic (in our case, the evolution of `perc_area` for each `condition` group), so that's what I'll choose for this example: 
 
