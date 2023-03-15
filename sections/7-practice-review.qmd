@@ -14,6 +14,10 @@ Take a look back at [Allison Horst's](https://allisonhorst.github.io/) data viz 
 -[**Lecture 16:** Data exploration and visualization continued](https://docs.google.com/presentation/d/e/2PACX-1vR1QB0S3AfBfdJZ1nnhUw2iKSxV83GDc5l9BYPC6yQhxBdnzRpAAZ2lh7QWhX4kY65Uf_q0yK9FtHmW/pub?start=false&loop=false&delayms=3000&slide=id.p)
 - [**Lab:** Customized Data Visualization in `ggplot2`](https://allisonhorst.github.io/eds221-day8-comp/data_viz.html)
 
+Or another excellent workshop by Allison Horst, presented to the Southern California Coastal Water Research Project (SCCWRP):
+
+- [Data visualization: Communicating data with responsible, clear, and engaging visualizations](https://docs.google.com/presentation/d/1EA_PfTiSXh8J0JH03d1pcA6luVJeN2oUGozxhZoiydQ/edit#slide=id.g605a49e43e_0_58)
+
 There are lots of other great data viz resources out there as well. Check out:
 
 - [A ggplot2 Tutorial for Beautiful Plotting in R
