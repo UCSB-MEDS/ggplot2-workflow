@@ -36,8 +36,9 @@ mko_avg <- mko_clean |>
 
 #..............................plot..............................
 mko_ridges_plot <- mko_clean |> 
-  group_by(month_name) |> 
   
+  # group by month ----
+  group_by(month_name) |> 
   
   # initialize ggplot ----
   ggplot(aes(x = Temp_bot, y = month_name, fill = after_stat(x))) +
