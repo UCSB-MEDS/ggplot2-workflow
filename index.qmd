@@ -131,8 +131,8 @@ earnings_plot <- ggplot(select_jobs) +
   
   # title & subtitle (add styling) ----
   labs(title = "**Earnings by Occupation and Sex**",
-       subtitle = "Median earnings of full-time <span style='color:#CD93D8'>**male**</span> versus <span style='color:#6A1E99'>**female**</span> workers by occupation in 2016",
-       caption = "<span style='color:#919092'>*Data courtesy of TidyTuesday (March 5, 2019)*</span>") +
+       subtitle = "Median earnings of full-time <span style='color:#CD93D8;'>**male**</span> versus <span style='color:#6A1E99;'>**female**</span> workers by occupation in 2016",
+       caption = "<span style='color:#919092;'>*Data courtesy of TidyTuesday (March 5, 2019)*</span>") +
   
   # set theme ----
   theme_minimal() +
@@ -141,13 +141,12 @@ earnings_plot <- ggplot(select_jobs) +
   theme(
   
     # facet panels 
-    strip.background = element_blank(),
     strip.text.x = element_text(face = "bold"),
   
     # title & subtitle 
     plot.title.position = "plot", # left-align plot title with left-edge of plot, not y-axis (see: https://github.com/tidyverse/ggplot2/issues/3252)
-    plot.title = ggtext::element_textbox_simple(size = 20, lineheight = 1, padding = margin(t = 0, r = 0, b = 5, l = 0)), # enables markdown text & creates textbox
-    plot.subtitle = ggtext::element_textbox_simple(size = 13, lineheight = 1, padding = margin(t = 5, r = 0, b = 10, l = 0)), # enable markdown text & creates textbox
+    plot.title = ggtext::element_textbox_simple(size = 20, padding = margin(t = 0, r = 0, b = 10, l = 0)), # enables markdown text & creates textbox
+    plot.subtitle = ggtext::element_textbox_simple(size = 13, padding = margin(t = 0, r = 0, b = 10, l = 0)), # enable markdown text & creates textbox
     plot.caption = ggtext::element_markdown(margin = margin(t = 15, r = 0, b = 0, l = 0)), # enable markdown text 
   
     # axes 
