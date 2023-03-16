@@ -71,6 +71,7 @@ We've successfully plotted our salary data for males and females by occupation, 
 - color-code male vs. female points
 - reorder occupations (I'll arrange them in descending order of average salary)
 - facet wrap by our three groupings (`perc_group`: occupations that are 75%+ female, 45-55% female, and 75%+ male) 
+- reformat x-axis values (wages in dollars, $)
 
 ```{r}
 #| eval: true
@@ -78,6 +79,7 @@ We've successfully plotted our salary data for males and females by occupation, 
 #| message: false
 #..........................load packages.........................
 library(tidyverse)
+library(scales)
 
 #..........................import data...........................
 # use this dataset if you want to explore all occupations included in the original TidyTuesday dataset

@@ -78,6 +78,8 @@ Finally, we can add/style titles and a caption, remove unnecessary axis labels, 
 #| warning: false
 #..........................load packages.........................
 library(tidyverse)
+library(scales)
+library(ggtext)
 
 #..........................import data...........................
 # use this dataset if you want to explore all occupations included in the original TidyTuesday dataset
