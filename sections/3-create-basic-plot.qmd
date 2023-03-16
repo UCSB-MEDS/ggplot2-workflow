@@ -60,9 +60,10 @@ select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds"))
 earnings_plot <- ggplot(select_jobs) +
   
   # create dumbbells ----
-  geom_segment(aes(x = occupation, xend = occupation, y = total_earnings_female, yend = total_earnings_male)) +
-  geom_point(aes(x = occupation, y = total_earnings_male)) +
-  geom_point(aes(x = occupation, y = total_earnings_female)) 
+  geom_segment(aes(x = total_earnings_female, xend = total_earnings_male, 
+                   y = occupation, yend = occupation)) +
+  geom_point(aes(x = total_earnings_female, y = occupation)) +
+  geom_point(aes(x = total_earnings_male, y = occupation)) 
 
 earnings_plot
 ```

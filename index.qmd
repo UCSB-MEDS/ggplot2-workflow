@@ -117,16 +117,16 @@ select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds"))
 earnings_plot <- ggplot(select_jobs) +
   
   # create dumbbells ----
-  geom_segment(aes(x = reorder(occupation, avg_salary), xend = occupation, y = total_earnings_female, yend = total_earnings_male)) +
-  geom_point(aes(x = occupation, y = total_earnings_male), color = "#CD93D8", size = 2.5) +
-  geom_point(aes(x = occupation, y = total_earnings_female), color = "#6A1E99", size = 2.5) +
+  geom_segment(aes(x = total_earnings_female, xend = total_earnings_male, 
+                   y = reorder(occupation, avg_salary), yend = occupation)) +
+  geom_point(aes(x = total_earnings_male, y = occupation), color = "#CD93D8", size = 2.5) +
+  geom_point(aes(x = total_earnings_female, y = occupation), color = "#6A1E99", size = 2.5) +
   
-  # flip axes & facet wrap by group ----
-  coord_flip() +
+  # acet wrap by group ----
   facet_wrap(~perc_group_label, nrow = 3, scales = "free_y") + # "free_y" plots only the axis labels that exist in each group
   
   # axis breaks & $ labels ----
-  scale_y_continuous(breaks = c(25000, 50000, 75000, 100000, 125000),
+  scale_x_continuous(breaks = c(25000, 50000, 75000, 100000, 125000),
                      labels = scales::label_dollar(scale = 0.001, suffix = "k")) + 
   
   # title & subtitle (add styling) ----

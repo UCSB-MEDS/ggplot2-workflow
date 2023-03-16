@@ -75,6 +75,7 @@ Finally, we can add/style titles and a caption, remove unnecessary axis labels, 
 #| eval: true
 #| echo: true
 #| message: false
+#| warning: false
 #..........................load packages.........................
 library(tidyverse)
 
@@ -91,16 +92,16 @@ select_jobs <- readRDS(here::here("clean-data", "select_jobs.rds"))
 earnings_plot <- ggplot(select_jobs) +
   
   # create dumbbells ----
-  geom_segment(aes(x = reorder(occupation, avg_salary), xend = occupation, y = total_earnings_female, yend = total_earnings_male)) + # reorder occupation by avg_salary here
-  geom_point(aes(x = occupation, y = total_earnings_male), color = "#CD93D8", size = 2.5) +
-  geom_point(aes(x = occupation, y = total_earnings_female), color = "#6A1E99", size = 2.5) +
+  geom_segment(aes(x = total_earnings_female, xend = total_earnings_male, 
+                   y = reorder(occupation, avg_salary), yend = occupation)) + # reorder occupation by avg_salary here
+  geom_point(aes(x = total_earnings_male, y = occupation), color = "#CD93D8", size = 2.5) +
+  geom_point(aes(x = total_earnings_female, y = occupation), color = "#6A1E99", size = 2.5) +
   
-  # flip axes & facet wrap by group ----
-  coord_flip() +
+  # facet wrap by group ----
   facet_wrap(~perc_group_label, nrow = 3, scales = "free_y") + # "free_y" plots only the axis labels that exist in each group
   
   # axis breaks & $ labels ----
-  scale_y_continuous(labels = scales::label_dollar(scale = 0.001, suffix = "k"),
+  scale_x_continuous(labels = scales::label_dollar(scale = 0.001, suffix = "k"),
                      breaks = c(25000, 50000, 75000, 100000, 125000)) +
   
   # title & subtitle (add styling) ----
