@@ -201,7 +201,7 @@ ca_plot <- drought_clean |>
   filter(state_abb == "CA") |> 
   
   # make wet condition values negative by multiplying by -1 ----
-  mutate(perc_area = ifelse(test = grepl("D", condition) == T, yes = perc_area, no = perc_area * -1)) |>
+  mutate(perc_area = ifelse(test = grepl("D", condition) == TRUE, yes = perc_area, no = perc_area * -1)) |>
   
   # initialize ggplot ----
   ggplot(aes(x = date, y = perc_area, fill = condition_long)) + 
