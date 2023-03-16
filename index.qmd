@@ -281,6 +281,11 @@ It's important to remember that there are lots of different tools, packages, and
 
 If you need a high-level `{ggplot2}` review and/or a reminder of important considerations for building responsible data visualizations, take a look back at Allison Horst's lectures [15](https://docs.google.com/presentation/d/e/2PACX-1vSpUdai7BTXprh3dwSNBpJymNGUIOFhEgQn5XbQWZhWy8EpUyd64Lem08YK_kc6tP0iyoJ5wRAVvSYe/pub?start=false&loop=false&delayms=3000&slide=id.p) and [16](https://docs.google.com/presentation/d/e/2PACX-1vR1QB0S3AfBfdJZ1nnhUw2iKSxV83GDc5l9BYPC6yQhxBdnzRpAAZ2lh7QWhX4kY65Uf_q0yK9FtHmW/pub?start=false&loop=false&delayms=3000&slide=id.p) from EDS 221.
 
+::: callout-important
+## Option: Fork the **ggplot2-workflow-template** GitHub repo
+You may fork the [ggplot2-workflow-template](https://github.com/UCSB-MEDS/ggplot2-workflow-template), which contains the cleaned data files used for each of the three example visualizations. Alternatively, download them individually here: [`mohawk_temps.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/mohawk_temps.rds) (Ex 1: Ocean Temperatures), [`all_jobs.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/all_jobs.rds) & [`select_jobs.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/select_jobs.rds) (Ex 2: Wages), [`us_drought.rds`](https://github.com/UCSB-MEDS/ggplot2-workflow/blob/main/clean-data/us_drought.rds) (Ex 3: CA Drought).
+:::
+
 {{< include /sections/1-determine-data-types.qmd >}}
 
 {{< include /sections/2-determine-graph-types.qmd >}}
