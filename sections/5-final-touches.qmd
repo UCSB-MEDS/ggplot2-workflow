@@ -40,7 +40,7 @@ mko_ridges_plot <- mko_clean |>
   geom_vline(xintercept = mko_avg, linetype = "dashed", color = "black") +
   annotate(geom = "segment", x = 18, y = "April", xend = mko_avg, yend = "May",
            arrow = arrow(length = unit(3, "mm"))) + # this is mostly just a bunch of manual fiddling until the arrow is placed where I want it
-  annotate(geom = "text", x = 18, y = "April", label = paste0(" Avg Temp = ", mko_avg, "°C"), hjust = "left") + # same here
+  annotate(geom = "label", x = 18, y = "April", label = paste0(" Avg Temp = ", mko_avg, "°C"), hjust = "left") + # same here
 
   # set x-axis breaks ----
   scale_x_continuous(breaks = c(9, 12, 15, 18, 21)) +
