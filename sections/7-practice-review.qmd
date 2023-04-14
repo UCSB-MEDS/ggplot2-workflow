@@ -16,8 +16,8 @@ Creating beautiful and effective data visualizations is a skill that gets better
 
 Take a look back at [Allison Horst's](https://allisonhorst.github.io/) data viz lectures and labs from EDS 221 for a `{ggplot2}` review, practice, and a reminder about important considerations for making responsible data visualizations:
 
-- [**Lecture 15:** The (layered) grammar of graphics & data viz considerations](https://docs.google.com/presentation/d/e/2PACX-1vSpUdai7BTXprh3dwSNBpJymNGUIOFhEgQn5XbQWZhWy8EpUyd64Lem08YK_kc6tP0iyoJ5wRAVvSYe/pub?start=false&loop=false&delayms=3000&slide=id.p)
--[**Lecture 16:** Data exploration and visualization continued](https://docs.google.com/presentation/d/e/2PACX-1vR1QB0S3AfBfdJZ1nnhUw2iKSxV83GDc5l9BYPC6yQhxBdnzRpAAZ2lh7QWhX4kY65Uf_q0yK9FtHmW/pub?start=false&loop=false&delayms=3000&slide=id.p)
+- [**Lecture 15:** The (layered) grammar of graphics & data viz considerations](https://docs.google.com/presentation/d/e/2PACX-1vSpUdai7BTXprh3dwSNBpJymNGUIOFhEgQn5XbQWZhWy8EpUyd64Lem08YK_kc6tP0iyoJ5wRAVvSYe/pub?start=false&loop=false&delayms=3000&slide=id.p)   
+- [**Lecture 16:** Data exploration and visualization continued](https://docs.google.com/presentation/d/e/2PACX-1vR1QB0S3AfBfdJZ1nnhUw2iKSxV83GDc5l9BYPC6yQhxBdnzRpAAZ2lh7QWhX4kY65Uf_q0yK9FtHmW/pub?start=false&loop=false&delayms=3000&slide=id.p)
 - [**Lab:** Customized Data Visualization in `ggplot2`](https://allisonhorst.github.io/eds221-day8-comp/data_viz.html)
 
 Or another excellent workshop by Allison Horst, presented to the Southern California Coastal Water Research Project (SCCWRP):
