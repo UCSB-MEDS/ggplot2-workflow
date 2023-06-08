@@ -19,7 +19,8 @@ jobs_gender_clean <- jobs_gender |>
           percent_male, percent_female,
           total_earnings, total_earnings_male, total_earnings_female, difference_earnings_male_female,
           wage_percent_of_male, avg_salary) |> 
-  drop_na(total_earnings_female, total_earnings_female) 
+  drop_na(total_earnings_female, total_earnings_female) |> 
+  mutate(occupation = as_factor(occupation))
 
 # identify NAs
 see_NAs <- jobs_gender_clean %>% 

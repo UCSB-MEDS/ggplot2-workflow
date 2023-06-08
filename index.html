@@ -295,7 +295,7 @@ TidyTuesday provides “tamed”, but not fully wrangled data
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 17
     year major_category     minor_category occupation total_workers workers_male
-   &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt;              &lt;dbl&gt;        &lt;dbl&gt;
+   &lt;dbl&gt; &lt;chr&gt;              &lt;chr&gt;          &lt;fct&gt;              &lt;dbl&gt;        &lt;dbl&gt;
  1  2016 Education, Legal,… Arts, Design,… Editors           125387        64120
  2  2016 Healthcare Practi… Healthcare Pr… Registere…       2317493       281048
  3  2016 Education, Legal,… Arts, Design,… Dancers a…          6556         1468
@@ -625,7 +625,7 @@ Stacked area plots should be used with caution.
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create dumbbells ----</span></span>
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> total_earnings_female, <span class="at">xend =</span> total_earnings_male, </span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">reorder</span>(occupation, avg_salary), <span class="at">yend =</span> occupation)) <span class="sc">+</span> <span class="co"># reorder occupation by avg_salary here</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">fct_reorder</span>(occupation, avg_salary), <span class="at">yend =</span> occupation)) <span class="sc">+</span> <span class="co"># reorder occupation by avg_salary here</span></span>
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> total_earnings_male, <span class="at">y =</span> occupation), <span class="at">color =</span> <span class="st">"#CD93D8"</span>, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> total_earnings_female, <span class="at">y =</span> occupation), <span class="at">color =</span> <span class="st">"#6A1E99"</span>, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
 <span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -781,7 +781,7 @@ Stacked area plots should be used with caution.
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create dumbbells ----</span></span>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> total_earnings_female, <span class="at">xend =</span> total_earnings_male, </span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">reorder</span>(occupation, avg_salary), <span class="at">yend =</span> occupation)) <span class="sc">+</span> <span class="co"># reorder occupation by avg_salary here</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">fct_reorder</span>(occupation, avg_salary), <span class="at">yend =</span> occupation)) <span class="sc">+</span> <span class="co"># reorder occupation by avg_salary here</span></span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> total_earnings_male, <span class="at">y =</span> occupation), <span class="at">color =</span> <span class="st">"#CD93D8"</span>, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> total_earnings_female, <span class="at">y =</span> occupation), <span class="at">color =</span> <span class="st">"#6A1E99"</span>, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
 <span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  </span>
