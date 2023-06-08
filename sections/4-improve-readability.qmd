@@ -95,7 +95,7 @@ earnings_plot <- ggplot(select_jobs) +
   
   # create dumbbells ----
   geom_segment(aes(x = total_earnings_female, xend = total_earnings_male, 
-                   y = fct_reorder(occupation, avg_salary), yend = occupation)) + # reorder occupation by avg_salary here
+                   y = reorder(occupation, avg_salary), yend = occupation)) + # reorder occupation by avg_salary here
   geom_point(aes(x = total_earnings_male, y = occupation), color = "#CD93D8", size = 2.5) +
   geom_point(aes(x = total_earnings_female, y = occupation), color = "#6A1E99", size = 2.5) +
   
