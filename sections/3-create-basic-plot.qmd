@@ -4,6 +4,8 @@ format: html
 
 ## `r fontawesome::fa("chart-simple", fill = "#5A5A5A", a11y = "sem")` Step 3. Create a basic plot
 
+Treat this as part of the [Exploratory Data Analysis](https://r4ds.hadley.nz/eda), or EDA, stage -- start by making the most basic version of your decided-upon chart type, but also don't be afraid to try different variants or alternative chart types. You should also assess data quality, investigate outliers, make sure that your data makes sense / meets expectations, etc. **Note:** you'll likely perform many of these assessments when you first start looking at your data (pre-Step 1), though this is woven into most stages of an analytical pipeline.
+
 ::: panel-tabset
 
 ## **`r fontawesome::fa("temperature-quarter", fill = "#5A5A5A", a11y = "sem")` Ex 1:** Ocean Temperatures
