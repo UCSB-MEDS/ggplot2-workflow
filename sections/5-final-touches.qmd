@@ -246,14 +246,14 @@ annotated_ca_plot <- cowplot::ggdraw(ca_plot) +
 annotated_ca_plot
 ```
 
-::: callout-note
+<!-- ::: callout-note
 ## **Bonus!** Check out the [`{geofacet}` package](https://github.com/hafen/geofacet/) for arranging plots in the shape of the US (or other regions).
 
 An unrefined plot as an example: 
 
 ```{r}
-#| eval: true
-#| echo: true
+#| eval: false
+#| echo: false
 #| message: false
 #..........................load packages.........................
 library(tidyverse)
@@ -285,6 +285,7 @@ all_states_plot <- drought_clean |>
 
 all_states_plot
 ```
-:::
 
-:::
+:::  -->
+
+::: 
